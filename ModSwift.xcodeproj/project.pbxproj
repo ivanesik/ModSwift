@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		586037DA7437745911FAB5E6 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860356FE565C3B22C5D8C18 /* Enums.swift */; };
 		58603AE5273B21227998B58D /* ModSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58603087D792F251503FE14F /* ModSwift.swift */; };
+		846CDB7B20E9F506005B86D8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846CDB7A20E9F506005B86D8 /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +28,7 @@
 		58603087D792F251503FE14F /* ModSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModSwift.swift; sourceTree = "<group>"; };
 		586030A215EC6361DDB57930 /* libModSwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libModSwift.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5860356FE565C3B22C5D8C18 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		846CDB7A20E9F506005B86D8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				58603087D792F251503FE14F /* ModSwift.swift */,
 				5860356FE565C3B22C5D8C18 /* Enums.swift */,
+				846CDB7A20E9F506005B86D8 /* Model.swift */,
 			);
 			path = ModSwift;
 			sourceTree = "<group>";
@@ -115,6 +118,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				846CDB7B20E9F506005B86D8 /* Model.swift in Sources */,
 				58603AE5273B21227998B58D /* ModSwift.swift in Sources */,
 				586037DA7437745911FAB5E6 /* Enums.swift in Sources */,
 			);
@@ -171,8 +175,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -269,6 +272,7 @@
 				58603ABE4933B8C35D847AB1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		58603D13BEA65649DF7F598A /* Build configuration list for PBXProject "ModSwift" */ = {
 			isa = XCConfigurationList;

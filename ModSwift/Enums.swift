@@ -10,8 +10,9 @@
  Describe the format of sended package
 */
 enum ModbusMode {
-    case rtu
     case tcp
+    case rtu
+    case ascii
 }
 
 /**
@@ -21,7 +22,7 @@ enum ModbusMode {
  - Holding:     16 bit read/write unsigned register
  - Input:       16 bit only read unsigned register
  */
-enum Command: UInt16 {
+enum Command: UInt8 {
     /** Read coil (one bit) register */
     case readCoilStatus = 0x01
     /** Read discrete (one bit) register */

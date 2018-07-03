@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+struct Request {
+    
+}
+
+struct Response {
+    
+}
