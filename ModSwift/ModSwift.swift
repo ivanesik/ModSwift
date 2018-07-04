@@ -12,6 +12,7 @@ import Foundation
 /////////////////////////TODO: в документации не забыть описать автоинкремент//////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////TODO: в документации написать что это мастер//////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////TODO: в документации описать что есть MBAP картинкой (http://cleverhouse.club/software/dispatch/chto-takoe-modbus-rtu-i-modbus-tcp.html)//////////////
+/////////////////////////TODO: написать проверки правильности пакетов//////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////TODO: написать тесты//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,23 +38,21 @@ class  ModSwift {
     /// - parameters:
     ///     - mode: Modbus mode (default tcp)
     ///     - device: Modbus device 16-bit adress (default 0x00)
-    init(mode: ModbusMode = .tcp, device: UInt8 = 0x00) {
+    init(mode: ModbusMode = .tcp, slaveAdress: UInt8 = 0x00) {
         _mode = mode
-        _slaveAdress = device
+        _slaveAdress = slaveAdress
     }
     
     /// Set modbus device adress.
     ///
     /// - parameters:
     ///     - device: Modbus device 16-bit adress.
-    func setDevice(device: UInt8 = 0x00) {
-        _slaveAdress = device
+    func setDevice(slaveAdress: UInt8 = 0x00) {
+        _slaveAdress = slaveAdress
     }
     
-    /// Set modbus device mode.
-    /// - parameters:
-    ///     - mode: Modbus mode (.tcp/.rtu/.ascii).
-    func setMode(mode: ModbusMode) {
+    /// Set modbus device mode. (.tcp/.rtu/.ascii)
+    func setMode(_ mode: ModbusMode) {
         _mode = mode
     }
     
@@ -78,96 +77,84 @@ class  ModSwift {
 //***************************************************************************************************************
 //-Create-Package------------------------------------------------------------------------------------------------
 //***************************************************************************************************************
-    func createCommand(command: Command, address: UInt16, data: [UInt16]) -> Data {
+    /// Universal method generate request package
+    ///
+    /// Fuctions 15, 16 need have num of elements and num of bytes
+    /// - parameters:
+    ///     - command: Modbus function.
+    ///     - address: Data 16 bit address.
+    ///     - data: For 1-4 commands number of readen elements, (5,6,15,16) data to write.
+    func createCommand(command: Command, address: UInt16, data: [UInt8]) -> Data {
         var package = [UInt8]()
         
         if _mode == ModbusMode.tcp {
-            addMBAP(package)
+            addMBAP(&package)
             _transactId += 1
         }
-        
         package.append(_slaveAdress)
         package.append(command.rawValue)
-        
-        switch command {
-            case .readCoilStatus:
-                break
-            case .readDiscreteInputs:
-                break
-            case .readHoldingRegisters:
-                package.append(contentsOf: [UInt8(address >> 8), UInt8(address & 0xFF)])
-                break
-            case .readInputRegisters:
-                break
-            case .forceSingleCoil:
-                break
-            case .forceMultipleCoils:
-                break
-            case .presetSingleRegister:
-                break
-            case .presetMultipleRegisters:
-                break
-        }
+        package.append(contentsOf: [UInt8(address >> 8), UInt8(address & 0xFF)])
+        package.append(contentsOf: data)
         
         let data = Data(package)
         return data
     }
     
-    
-    func readCoidStatus(address: UInt32) -> Data {
-        let data = Data()
-        
-        _transactId += 1
-        return data
+    /// Returns package of readCoilsStatuses function (0x01)
+    func readCoilStatus(startAddress: UInt16, numOfCoils: UInt16) -> Data {
+        return createCommand(command: .readCoilStatus, address: startAddress, data: [UInt8(numOfCoils >> 8), UInt8(numOfCoils & 0xFF)])
     }
     
-    func readDiscreteInputs(/*parameters*/) -> Data {
-        let data = Data()
-        
-        _transactId += 1
-        return data
+    /// Returns package for readDiscreteInputs function (0x02)
+    func readDiscreteInputs(startAddress: UInt16, numOfInputs: UInt16) -> Data {
+        return createCommand(command: .readDiscreteInputs, address: startAddress, data: [UInt8(numOfInputs >> 8), UInt8(numOfInputs & 0xFF)])
     }
     
-    func readHoldingRegisters(/*parameters*/) -> Data {
-        let data = Data()
-        
-        _transactId += 1
-        return data
+    /// Returns package for readHoldingRegisters function (0x03)
+    func readHoldingRegisters(startAddress: UInt16, numOfRegs: UInt16) -> Data {
+        return createCommand(command: .readHoldingRegisters, address: startAddress, data: [UInt8(numOfRegs >> 8), UInt8(numOfRegs & 0xFF)])
     }
     
-    func readInputRegisters(/*parameters*/) -> Data {
-        let data = Data()
-        
-        _transactId += 1
-        return data
+    /// Returns package for readInputRegisters function (0x04)
+    func readInputRegisters(startAddress: UInt16, numOfRegs: UInt16) -> Data {
+        return createCommand(command: .readInputRegisters, address: startAddress, data: [UInt8(numOfRegs >> 8), UInt8(numOfRegs & 0xFF)])
     }
     
-    func forceSingleCoil(/*parameters*/) -> Data {
-        let data = Data()
-        
-        _transactId += 1
-        return data
+    /// Returns package for force (write) single coil function (0x05)
+    func forceSingleCoil(startAddress: UInt16, value: Bool) -> Data {
+        return createCommand(command: .forceSingleCoil, address: startAddress, data: [(value ? 0xFF : 0x00) , 0x00])
     }
     
-    func presetSingleRegister(/*parameters*/) -> Data {
-        let data = Data()
-        
-        _transactId += 1
-        return data
+    /// Returns package for preset (write) single register function (0x06)
+    func presetSingleRegister(startAddress: UInt16, value: UInt16) -> Data {
+        return createCommand(command: .presetSingleRegister, address: startAddress, data: [UInt8(value >> 8) , UInt8(value & 0xFF)])
     }
     
-    func forceMultipleCoils(/*parameters*/) -> Data {
-        let data = Data()
-        
-        _transactId += 1
-        return data
+    /// Returns package for force (write) multiple coils function (0x0F)
+    func forceMultipleCoils(startAddress: UInt16, values: [Bool]) -> Data {
+        var data = [UInt8]()
+        data.append(contentsOf: [UInt8(values.count >> 8), UInt8(values.count >> 8)])
+        data.append(UInt8(values.count / 8))
+        let bytesCount = Int(ceil(Double(values.count / 8)))
+        for i in 0...bytesCount {
+            var byte: UInt8 = 0
+            for y in 0...8 {
+                byte = byte << 1
+                byte += values[(i * 8) + y] ? 1 : 0
+            }
+            data.append(byte)
+        }
+
+        return createCommand(command: .forceMultipleCoils, address: startAddress, data: data)
     }
     
-    func presetMultipleRegisters(/*parameters*/) -> Data {
-        let data = Data()
-        
-        _transactId += 1
-        return data
+    /// Returns package for preset (write) multiple registers function (0x10)
+    func presetMultipleRegisters(startAddress: UInt16, values: [UInt16]) -> Data {
+        var data = [UInt8]()
+        for value in values {
+            data.append(contentsOf: [UInt8(value >> 8), UInt8(value & 0xFF)])
+        }
+        return createCommand(command: .presetMultipleRegisters, address: startAddress, data: data)
     }
     
     
@@ -176,12 +163,15 @@ class  ModSwift {
 //***************************************************************************************************************
 //-Help----------------------------------------------------------------------------------------------------------
 //***************************************************************************************************************
-    private func addMBAP(_ arr: [UInt8]) {
-        var temp = arr
-        temp.append(UInt8(_transactId >> 8))
-        temp.append(UInt8(_transactId & 0xFF))
-        temp.append(UInt8(_protocolId >> 8))
-        temp.append(UInt8(_protocolId & 0xFF))
+    private func addMBAP(_ arr: inout [UInt8]) {
+        arr.append(UInt8(_transactId >> 8))
+        arr.append(UInt8(_transactId & 0xFF))
+        arr.append(UInt8(_protocolId >> 8))
+        arr.append(UInt8(_protocolId & 0xFF))
+    }
+    
+    private func addCrc(_ arr: inout [UInt8]) {
+        
     }
     
     

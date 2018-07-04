@@ -38,9 +38,9 @@ enum Command: UInt8 {
     case presetSingleRegister = 0x06
 
     /** Write multiply coil (one bit) registers */
-    case forceMultipleCoils = 0x15
+    case forceMultipleCoils = 0x0F
     /** Write multiply holding (16 bit bit) registers */
-    case presetMultipleRegisters = 0x16
+    case presetMultipleRegisters = 0x10
 }
 
 /**
