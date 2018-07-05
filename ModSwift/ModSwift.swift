@@ -19,7 +19,7 @@ import Foundation
 
 
 
-
+/// Class for generating modbus packages
 class  ModSwift {
     
     private var _mode: ModbusMode
@@ -47,7 +47,7 @@ class  ModSwift {
     ///
     /// - parameters:
     ///     - device: Modbus device 16-bit adress.
-    func setDevice(slaveAdress: UInt8 = 0x00) {
+    func setSlave(slaveAdress: UInt8 = 0x00) {
         _slaveAdress = slaveAdress
     }
     
@@ -72,6 +72,22 @@ class  ModSwift {
     func readRequest(data: Data) -> [UInt8] {
         let arr = [UInt8](data)
         return arr
+    }
+    
+    func getSlave() -> UInt8 {
+        return _slaveAdress
+    }
+    
+    func getMode() -> ModbusMode {
+        return _mode
+    }
+    
+    func getTransactionId() -> UInt16 {
+        return _transactId
+    }
+    
+    func getProtocolId() -> UInt16 {
+        return _protocolId
     }
     
 //***************************************************************************************************************

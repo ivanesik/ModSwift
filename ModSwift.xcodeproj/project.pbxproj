@@ -9,8 +9,20 @@
 /* Begin PBXBuildFile section */
 		586037DA7437745911FAB5E6 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860356FE565C3B22C5D8C18 /* Enums.swift */; };
 		58603AE5273B21227998B58D /* ModSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58603087D792F251503FE14F /* ModSwift.swift */; };
-		846CDB7B20E9F506005B86D8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846CDB7A20E9F506005B86D8 /* Model.swift */; };
+		843B4E6C20EDDC2E00965421 /* ModSwiftTcpTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B4E6B20EDDC2E00965421 /* ModSwiftTcpTest.swift */; };
+		843B4E6E20EDDC2E00965421 /* libModSwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 586030A215EC6361DDB57930 /* libModSwift.a */; };
+		843B4E8320EDE70B00965421 /* ModSwiftSharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B4E8220EDE70B00965421 /* ModSwiftSharedTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		843B4E6F20EDDC2E00965421 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 586036958B3C96BBD298CC4C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5860385B6E1D3F0A45AEC5E9;
+			remoteInfo = ModSwift;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		5860374905045297649BDB7E /* CopyFiles */ = {
@@ -28,7 +40,10 @@
 		58603087D792F251503FE14F /* ModSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModSwift.swift; sourceTree = "<group>"; };
 		586030A215EC6361DDB57930 /* libModSwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libModSwift.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5860356FE565C3B22C5D8C18 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
-		846CDB7A20E9F506005B86D8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		843B4E6920EDDC2E00965421 /* ModSwiftTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModSwiftTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		843B4E6B20EDDC2E00965421 /* ModSwiftTcpTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModSwiftTcpTest.swift; sourceTree = "<group>"; };
+		843B4E6D20EDDC2E00965421 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		843B4E8220EDE70B00965421 /* ModSwiftSharedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModSwiftSharedTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +54,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		843B4E6620EDDC2E00965421 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843B4E6E20EDDC2E00965421 /* libModSwift.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -46,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				586030A215EC6361DDB57930 /* libModSwift.a */,
+				843B4E6920EDDC2E00965421 /* ModSwiftTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,7 +79,6 @@
 			children = (
 				58603087D792F251503FE14F /* ModSwift.swift */,
 				5860356FE565C3B22C5D8C18 /* Enums.swift */,
-				846CDB7A20E9F506005B86D8 /* Model.swift */,
 			);
 			path = ModSwift;
 			sourceTree = "<group>";
@@ -65,7 +88,18 @@
 			children = (
 				586034764B2102C8978B30D4 /* Products */,
 				586034D8915A8A660319F3D6 /* ModSwift */,
+				843B4E6A20EDDC2E00965421 /* ModSwiftTest */,
 			);
+			sourceTree = "<group>";
+		};
+		843B4E6A20EDDC2E00965421 /* ModSwiftTest */ = {
+			isa = PBXGroup;
+			children = (
+				843B4E8220EDE70B00965421 /* ModSwiftSharedTests.swift */,
+				843B4E6B20EDDC2E00965421 /* ModSwiftTcpTest.swift */,
+				843B4E6D20EDDC2E00965421 /* Info.plist */,
+			);
+			path = ModSwiftTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -88,13 +122,39 @@
 			productReference = 586030A215EC6361DDB57930 /* libModSwift.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		843B4E6820EDDC2E00965421 /* ModSwiftTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 843B4E7320EDDC2E00965421 /* Build configuration list for PBXNativeTarget "ModSwiftTest" */;
+			buildPhases = (
+				843B4E6520EDDC2E00965421 /* Sources */,
+				843B4E6620EDDC2E00965421 /* Frameworks */,
+				843B4E6720EDDC2E00965421 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				843B4E7020EDDC2E00965421 /* PBXTargetDependency */,
+			);
+			name = ModSwiftTest;
+			productName = ModSwiftTest;
+			productReference = 843B4E6920EDDC2E00965421 /* ModSwiftTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		586036958B3C96BBD298CC4C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0940;
 				ORGANIZATIONNAME = "Ivan Elyoskin";
+				TargetAttributes = {
+					843B4E6820EDDC2E00965421 = {
+						CreatedOnToolsVersion = 9.4;
+						DevelopmentTeam = Y58337NXE2;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 58603D13BEA65649DF7F598A /* Build configuration list for PBXProject "ModSwift" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -109,22 +169,49 @@
 			projectRoot = "";
 			targets = (
 				5860385B6E1D3F0A45AEC5E9 /* ModSwift */,
+				843B4E6820EDDC2E00965421 /* ModSwiftTest */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		843B4E6720EDDC2E00965421 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		586037FC172F319644AC63D7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				846CDB7B20E9F506005B86D8 /* Model.swift in Sources */,
 				58603AE5273B21227998B58D /* ModSwift.swift in Sources */,
 				586037DA7437745911FAB5E6 /* Enums.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		843B4E6520EDDC2E00965421 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843B4E6C20EDDC2E00965421 /* ModSwiftTcpTest.swift in Sources */,
+				843B4E8320EDE70B00965421 /* ModSwiftSharedTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		843B4E7020EDDC2E00965421 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5860385B6E1D3F0A45AEC5E9 /* ModSwift */;
+			targetProxy = 843B4E6F20EDDC2E00965421 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		58603510E57A6CAA203729FA /* Release */ = {
@@ -262,6 +349,34 @@
 			};
 			name = Release;
 		};
+		843B4E7120EDDC2E00965421 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y58337NXE2;
+				INFOPLIST_FILE = ModSwiftTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = temp.ModSwiftTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		843B4E7220EDDC2E00965421 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y58337NXE2;
+				INFOPLIST_FILE = ModSwiftTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = temp.ModSwiftTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -279,6 +394,15 @@
 			buildConfigurations = (
 				58603A342F18C11D5099CC12 /* Debug */,
 				58603510E57A6CAA203729FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		843B4E7320EDDC2E00965421 /* Build configuration list for PBXNativeTarget "ModSwiftTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				843B4E7120EDDC2E00965421 /* Debug */,
+				843B4E7220EDDC2E00965421 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
