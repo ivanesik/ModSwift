@@ -34,8 +34,6 @@ class ModSwiftTcpTest: XCTestCase {
 //-Tests---------------------------------------------------------------------------------------------------------
 //***************************************************************************************************************
     func testReadCoilStatus() {
-        // transactionId = 0x0001, protocolId = 0x0000, len = 0x0006,
-        // slave = 0x0B, function = 0x01, address = 0x010D, data = 0x0019
         let rightData = Data([0, 1, 0, 0,0, 6, 11, 1, 1, 13, 0, 25] )
         let data = modbus.readCoilStatus(startAddress: 0x010D, numOfCoils: 0x0019)
         XCTAssertEqual(data, rightData)
@@ -45,6 +43,9 @@ class ModSwiftTcpTest: XCTestCase {
     }
     
     func testReadHoldingRegisters() {
+        let rightData = Data([0, 1, 0, 0,0, 6, 11, 1, 1, 13, 0, 25] )
+        let data = modbus.readHoldingRegisters(startAddress: 0x010D, numOfRegs: 0x0003)
+        XCTAssertEqual(data, rightData)
     }
     
     func testReadInputRegisters() {

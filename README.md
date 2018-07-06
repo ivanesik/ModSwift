@@ -8,7 +8,8 @@ ____
 This library create for easy generate modbus commands on swift
 
 ## Features
-- .tcp, .rtu mode
+- **Modbus Master** mode
+- .tcp mode
 
 ## Requirements
 
@@ -38,6 +39,22 @@ Setup
     modbus.setTransactionId(15)         // Set modbus transaction id to 0x000E (just in .tcp mode)
     modbus.setProtocolId(3)             // Set modbus protocol id to 0x0003 (just in .tcp mode)
 ```
+
+Package create
+```swift
+var modbus = ModSwift()             // Default .tcp, slave address = 0x00
+let data = modbus.readCoilStatus(startAddress: 0x010D, numOfCoils: 0x0019)
+print(data as NSData) <0001 0000 0006 0B01 010D 0019>
+
+let data = readHoldingRegisters(startAddress: 0x010D, numOfCoils: 0x0019)
+print(data as NSData) <0001 0000 0006 0B03 010D 0019>
+```
+
+## TODO
+- Read reseave packages
+- Slave mode
+- Modbus RTU mode
+- Modbus ASCII mode
 
 ## License
 
