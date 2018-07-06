@@ -20,6 +20,9 @@ class ModSwiftTcpTest: XCTestCase {
         super.setUp()
         modbus = ModSwift()
         modbus.setMode(.tcp)
+        modbus.setTransactionId(0x0001)
+        modbus.setProtocolId(0x0000)
+        modbus.setSlave(slaveAdress: 0x0B)
     }
     
     override func tearDown() {
@@ -30,31 +33,39 @@ class ModSwiftTcpTest: XCTestCase {
 //***************************************************************************************************************
 //-Tests---------------------------------------------------------------------------------------------------------
 //***************************************************************************************************************
-    func readCoilStatus() {
+    func testReadCoilStatus() {
+        // transactionId = 0x0001, protocolId = 0x0000, len = 0x0006,
+        // slave = 0x0B, function = 0x01, address = 0x010D, data = 0x0019
+        let rightData = Data([0, 1, 0, 0,0, 6, 11, 1, 1, 13, 0, 25] )
+        let data = modbus.readCoilStatus(startAddress: 0x010D, numOfCoils: 0x0019)
+        XCTAssertEqual(data, rightData)
     }
     
-    func readDiscreteInputs() {
+    func testReadDiscreteInputs() {
     }
     
-    func readHoldingRegisters() {
+    func testReadHoldingRegisters() {
     }
     
-    func readInputRegisters() {
+    func testReadInputRegisters() {
     }
     
-    func forceSingleCoil() {
+    func testForceSingleCoil() {
     }
     
-    func presetSingleRegister() {
+    func testPresetSingleRegister() {
     }
     
-    func forceMultipleCoils() {
+    func testForceMultipleCoils() {
     }
     
-    /// Returns package for preset (write) multiple registers function (0x10)
-    func presetMultipleRegisters() {
+    func testPresetMultipleRegisters() {
     }
     
+    
+    func testCommandCreate() {
+        
+    }
 
     
 }

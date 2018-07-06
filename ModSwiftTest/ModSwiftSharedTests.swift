@@ -41,7 +41,7 @@ class ModSwiftSharedTests: XCTestCase {
         XCTAssertEqual(modbus.getSlave(), address)
     }
     
-    func testMode() {
+    func testSetMode() {
         modbus.setMode(.tcp)
         XCTAssertEqual(modbus.getMode(), ModbusMode.tcp)
         modbus.setMode(.rtu)

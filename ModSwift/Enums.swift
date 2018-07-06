@@ -6,14 +6,20 @@
 //  Copyright © 2018 Ivan Elyoskin. All rights reserved.
 //
 
-/**
- Describe the format of sended package
-*/
+/// Describe the format of sended package
 enum ModbusMode {
     case tcp
     case rtu
     case ascii
 }
+
+/// CRC mode (just in .rtu/.ascii modes)
+enum CrcMode {
+    case crc8
+    case crc16
+    case crc32
+}
+
 
 /**
  Modbus command codes
