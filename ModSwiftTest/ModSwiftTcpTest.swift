@@ -43,7 +43,7 @@ class ModSwiftTcpTest: XCTestCase {
     }
     
     func testReadHoldingRegisters() {
-        let rightData = Data([0, 1, 0, 0,0, 6, 11, 1, 1, 13, 0, 25] )
+        let rightData = Data([0, 1, 0, 0, 0, 6, 11, 1, 1, 13, 0, 25] )
         let data = modbus.readHoldingRegisters(startAddress: 0x010D, numOfRegs: 0x0003)
         XCTAssertEqual(data, rightData)
     }
