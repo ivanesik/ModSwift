@@ -28,7 +28,7 @@ This library create for easy generate modbus commands on swift
 
 
 ## Installation
-
+Download repository and add ModSwift folder in your project 
 
 ## Usage
 Setup
@@ -55,6 +55,7 @@ print(data as NSData) //<00010000 00060B03 010D0019>
 - Slave mode
 - Modbus RTU mode
 - Modbus ASCII mode
+- CocoaPods
 
 ## License
 
