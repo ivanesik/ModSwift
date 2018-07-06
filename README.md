@@ -44,10 +44,10 @@ Package create
 ```swift
 var modbus = ModSwift()             // Default .tcp, slave address = 0x00
 let data = modbus.readCoilStatus(startAddress: 0x010D, numOfCoils: 0x0019)
-print(data as NSData) <0001 0000 0006 0B01 010D 0019>
+print(data as NSData) <00010000 00060B01 010D0019>
 
 let data = readHoldingRegisters(startAddress: 0x010D, numOfCoils: 0x0019)
-print(data as NSData) <0001 0000 0006 0B03 010D 0019>
+print(data as NSData) <00010000 00060B03 010D0019>
 ```
 
 ## TODO
