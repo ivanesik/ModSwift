@@ -11,9 +11,6 @@ This library create for easy generate modbus commands on swift
 - **Modbus Master** mode
 - .tcp mode
 
-## Requirements
-
-
 ## Functions
 - Read coil (one bit) register: **readCoilStatus** = 0x01
 - Read discrete (one bit) register: **readDiscreteInputs** = 0x02
@@ -43,16 +40,16 @@ Setup
 Package create
 ```swift
 var modbus = ModSwift()
-let data = modbus.readCoilStatus(startAddress: 0x010D, numOfCoils: 0x0019)
-print(data as NSData) //<00010000 00060B01 010D0019>
+let dataRCS = modbus.readCoilStatus(startAddress: 0x010D, numOfCoils: 0x0019)
+print(dataRCS as NSData) //<00010000 00060B01 010D0019>
 
-let data = modbus.readHoldingRegisters(startAddress: 0x010D, numOfCoils: 0x0019)
-print(data as NSData) //<00010000 00060B03 010D0019>
+let dataPMR = modbus.presetMultipleRegisters(startAddress: 0x010D, values: [0xA30D, 0x1501, 0x1127])
+print(dataPMR as NSData) //<00010000 000d0b10 010d0003 06a30d15 011127>
 ```
 
 ## TODO
-- Read reseave packages
-- Slave mode
+- Read reseaved packages in structure
+- Slave package generate
 - Modbus RTU mode
 - Modbus ASCII mode
 - CocoaPods

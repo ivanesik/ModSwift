@@ -177,6 +177,8 @@ class  ModSwift {
     /// Returns package for preset (write) multiple registers function (0x10)
     func presetMultipleRegisters(startAddress: UInt16, values: [UInt16]) -> Data {
         var data = [UInt8]()
+        data.append(contentsOf: [UInt8(values.count >> 8), UInt8(values.count & 0xFF)])
+        data.append(UInt8(values.count * 2))
         for value in values {
             data.append(contentsOf: [UInt8(value >> 8), UInt8(value & 0xFF)])
         }

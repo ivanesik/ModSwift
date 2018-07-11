@@ -80,7 +80,11 @@ class ModSwiftTcpTest: XCTestCase {
     }
     
     func testPresetMultipleRegisters() {
-        //let rightData = Data([0, 1, 0, 0, 0, 6, 11, 16,
+        let rightData = Data([0, 1, 0, 0, 0, 13, 11, 16, 1, 13, 0, 3 /*reg nums*/, 6, 0xA3, 0x0D, 0x15, 0x01, 0x11, 0x27])
+        let data = modbus.presetMultipleRegisters(startAddress: 0x010D, values: [0xA30D, 0x1501, 0x1127])
+        print(rightData as NSData)
+        print(data as NSData)
+        XCTAssertEqual(data, rightData)
     }
     
     
