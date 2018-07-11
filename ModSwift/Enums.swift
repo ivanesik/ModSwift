@@ -15,6 +15,7 @@ enum ModbusMode {
 
 /// CRC mode (just in .rtu/.ascii modes)
 enum CrcMode {
+    case crcNone
     case crc8
     case crc16
     case crc32

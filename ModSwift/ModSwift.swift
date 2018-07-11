@@ -153,14 +153,20 @@ class  ModSwift {
     /// Returns package for force (write) multiple coils function (0x0F)
     func forceMultipleCoils(startAddress: UInt16, values: [Bool]) -> Data {
         var data = [UInt8]()
-        data.append(contentsOf: [UInt8(values.count >> 8), UInt8(values.count >> 8)])
-        data.append(UInt8(values.count / 8))
-        let bytesCount = Int(ceil(Double(values.count / 8)))
-        for i in 0...bytesCount {
+        data.append(contentsOf: [UInt8(values.count >> 8), UInt8(values.count & 0xFF)])
+        let bytesCount = Int(ceil(Double(values.count) / 8)) // if values.count = 20, then 3 bytes
+        data.append(UInt8(bytesCount))
+        
+        for i in 0...(bytesCount - 1) {
             var byte: UInt8 = 0
-            for y in 0...8 {
-                byte = byte << 1
-                byte += values[(i * 8) + y] ? 1 : 0
+            for y in 0...7 {
+                let index = i * 8 + y
+                if index < values.count {
+                    byte += values[index] ? 128 : 0
+                }
+                if y != 7 {
+                    byte = byte >> 1
+                }
             }
             data.append(byte)
         }
@@ -184,6 +190,13 @@ class  ModSwift {
 //-Help----------------------------------------------------------------------------------------------------------
 //***************************************************************************************************************
     private func addCrc(_ arr: inout [UInt8]) {
+        
+        /*for i in (0 ... 15).reversed ()
+        {
+            crcArr[i] = UInt8(crc % 256)
+            crc >>= 8
+        }*/
+        
     }
     
 }
