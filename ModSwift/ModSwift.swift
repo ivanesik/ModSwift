@@ -118,7 +118,7 @@ class  ModSwift {
         package.append(command.rawValue)
         package.append(contentsOf: [UInt8(address >> 8), UInt8(address & 0xFF)])
         package.append(contentsOf: data)
-        // Crc
+        // Crc adding
         if _mode == ModbusMode.rtu {
             if _crcMode == CrcMode.crc16modbus {
                 let crc = Crc16().modbusCrc16(package)!
