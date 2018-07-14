@@ -10,6 +10,7 @@ This library create for easy generate modbus commands on swift
 ## Features
 - **Modbus Master** mode
 - .tcp mode
+- .rtu mode
 
 ## Functions
 - Read coil (one bit) register: **readCoilStatus** = 0x01
@@ -50,8 +51,8 @@ print(dataPMR as NSData) //<00010000 000d0b10 010d0003 06a30d15 011127>
 ## TODO
 - Read reseaved packages in structure
 - Slave package generate
-- Modbus RTU mode
 - Modbus ASCII mode
+- LRC check
 - CocoaPods
 
 ## License

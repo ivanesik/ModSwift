@@ -100,7 +100,7 @@ class  ModSwift {
     ///     - command: Modbus function.
     ///     - address: Data 16 bit address.
     ///     - data: For 1-4 commands number of readen elements, (5,6,15,16) data to write.
-    func createCommand(command: Command, address: UInt16, data: [UInt8]) -> Data {
+    private func createCommand(command: Command, address: UInt16, data: [UInt8]) -> Data {
         var package = [UInt8]()
         
         // mbap in tcp mode
@@ -115,6 +115,11 @@ class  ModSwift {
         package.append(command.rawValue)
         package.append(contentsOf: [UInt8(address >> 8), UInt8(address & 0xFF)])
         package.append(contentsOf: data)
+        
+        if _mode == ModbusMode.rtu {
+            let crc = Crc16().modbusCrc16(package)!
+            package.append(contentsOf: [UInt8(crc >> 8), UInt8(crc & 0xFF)])
+        }
         
         let data = Data(package)
         return data

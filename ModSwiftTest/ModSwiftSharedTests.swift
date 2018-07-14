@@ -73,5 +73,10 @@ class ModSwiftSharedTests: XCTestCase {
         modbus.setProtocolId(protocolId)
         XCTAssertEqual(modbus.getProtocolId(), protocolId)
     }
+    
+    func testCrc8() {
+        let modbusCrc16 = Crc16().modbusCrc16([0x12, 0x5F, 0x84, 0x05])
+        XCTAssertEqual(0x4D96, modbusCrc16)
+    }
 
 }

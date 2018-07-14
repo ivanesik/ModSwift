@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		586037DA7437745911FAB5E6 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860356FE565C3B22C5D8C18 /* Enums.swift */; };
 		58603AE5273B21227998B58D /* ModSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58603087D792F251503FE14F /* ModSwift.swift */; };
+		8439436D20F9EEA200146184 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439436C20F9EEA200146184 /* Model.swift */; };
+		8439436F20F9EEAC00146184 /* ModSwiftRtuTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439436E20F9EEAC00146184 /* ModSwiftRtuTest.swift */; };
 		843B4E6C20EDDC2E00965421 /* ModSwiftTcpTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B4E6B20EDDC2E00965421 /* ModSwiftTcpTest.swift */; };
 		843B4E6E20EDDC2E00965421 /* libModSwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 586030A215EC6361DDB57930 /* libModSwift.a */; };
 		843B4E8320EDE70B00965421 /* ModSwiftSharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B4E8220EDE70B00965421 /* ModSwiftSharedTests.swift */; };
@@ -39,7 +40,8 @@
 /* Begin PBXFileReference section */
 		58603087D792F251503FE14F /* ModSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModSwift.swift; sourceTree = "<group>"; };
 		586030A215EC6361DDB57930 /* libModSwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libModSwift.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5860356FE565C3B22C5D8C18 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		8439436C20F9EEA200146184 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		8439436E20F9EEAC00146184 /* ModSwiftRtuTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModSwiftRtuTest.swift; sourceTree = "<group>"; };
 		843B4E6920EDDC2E00965421 /* ModSwiftTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModSwiftTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		843B4E6B20EDDC2E00965421 /* ModSwiftTcpTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModSwiftTcpTest.swift; sourceTree = "<group>"; };
 		843B4E6D20EDDC2E00965421 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,8 +80,8 @@
 		586034D8915A8A660319F3D6 /* ModSwift */ = {
 			isa = PBXGroup;
 			children = (
+				8439436C20F9EEA200146184 /* Model.swift */,
 				58603087D792F251503FE14F /* ModSwift.swift */,
-				5860356FE565C3B22C5D8C18 /* Enums.swift */,
 			);
 			path = ModSwift;
 			sourceTree = "<group>";
@@ -97,6 +99,7 @@
 		843B4E6A20EDDC2E00965421 /* ModSwiftTest */ = {
 			isa = PBXGroup;
 			children = (
+				8439436E20F9EEAC00146184 /* ModSwiftRtuTest.swift */,
 				843B4E8220EDE70B00965421 /* ModSwiftSharedTests.swift */,
 				843B4E6B20EDDC2E00965421 /* ModSwiftTcpTest.swift */,
 				843B4E6D20EDDC2E00965421 /* Info.plist */,
@@ -192,7 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58603AE5273B21227998B58D /* ModSwift.swift in Sources */,
-				586037DA7437745911FAB5E6 /* Enums.swift in Sources */,
+				8439436D20F9EEA200146184 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +205,7 @@
 			files = (
 				843B4E6C20EDDC2E00965421 /* ModSwiftTcpTest.swift in Sources */,
 				843B4E8320EDE70B00965421 /* ModSwiftSharedTests.swift in Sources */,
+				8439436F20F9EEAC00146184 /* ModSwiftRtuTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
