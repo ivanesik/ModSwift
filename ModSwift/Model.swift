@@ -18,7 +18,7 @@ enum CrcMode {
     //case crcNone
     //case crc8
     //case crc16
-    //case crc16modbus
+    case crc16modbus
     //case crc32
 }
 

@@ -29,6 +29,8 @@ class  ModSwift {
     private var _transactId: UInt16 = 0x00
     /// Just for .tcp mode
     private var _protocolId: UInt16 = 0x00
+    /// Just fot .rtu mode
+    private var _crcMode: CrcMode
     
 //***************************************************************************************************************
 //-Setup---------------------------------------------------------------------------------------------------------
@@ -38,9 +40,10 @@ class  ModSwift {
     /// - parameters:
     ///     - mode: Modbus mode (default tcp)
     ///     - device: Modbus device 16-bit adress (default 0x00)
-    init(mode: ModbusMode = .tcp, slaveAdress: UInt8 = 0x00) {
+    init(mode: ModbusMode = .tcp, slaveAdress: UInt8 = 0x00, crcMode: CrcMode = .crc16modbus) {
         _mode = mode
         _slaveAdress = slaveAdress
+        _crcMode = crcMode
     }
     
     /// Set modbus device adress.
@@ -117,8 +120,10 @@ class  ModSwift {
         package.append(contentsOf: data)
         
         if _mode == ModbusMode.rtu {
-            let crc = Crc16().modbusCrc16(package)!
-            package.append(contentsOf: [UInt8(crc >> 8), UInt8(crc & 0xFF)])
+            if _crcMode == CrcMode.crc16modbus {
+                let crc = Crc16().modbusCrc16(package)!
+                package.append(contentsOf: [UInt8(crc >> 8), UInt8(crc & 0xFF)])
+            }
         }
         
         let data = Data(package)
