@@ -46,8 +46,8 @@ class ModSwiftSharedTests: XCTestCase {
         XCTAssertEqual(modbus.getMode(), ModbusMode.tcp)
         modbus.setMode(.rtu)
         XCTAssertEqual(modbus.getMode(), ModbusMode.rtu)
-        modbus.setMode(.ascii)
-        XCTAssertEqual(modbus.getMode(), ModbusMode.ascii)
+        //modbus.setMode(.ascii)
+        //XCTAssertEqual(modbus.getMode(), ModbusMode.ascii)
     }
     
     func testSetTransactionId() {
