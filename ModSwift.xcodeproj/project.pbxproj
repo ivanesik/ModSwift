@@ -89,10 +89,10 @@
 		58603BB379B394F8059631DA = {
 			isa = PBXGroup;
 			children = (
-				8499D69320F60C920060112C /* README.md */,
-				586034764B2102C8978B30D4 /* Products */,
 				586034D8915A8A660319F3D6 /* ModSwift */,
 				843B4E6A20EDDC2E00965421 /* ModSwiftTest */,
+				8499D69320F60C920060112C /* README.md */,
+				586034764B2102C8978B30D4 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
