@@ -1,27 +1,18 @@
 //
-//  ModSwift.swift
-//  Enums
+//  Model.swift
+//  
 //
-//  Created by Admin on 02.07.2018.
-//  Copyright © 2018 Ivan Elyoskin. All rights reserved.
+//  Created by Ivan Eleskin on 02.07.2018.
 //
 
+import Foundation
+
 /// Describe the format of sended package
-enum ModbusMode {
+public enum ModbusMode {
     case tcp
     case rtu
     //case ascii
 }
-
-/// CRC mode (just in .rtu/.ascii modes)
-enum CrcMode {
-    //case crcNone
-    //case crc8
-    //case crc16
-    case crc16modbus
-    //case crc32
-}
-
 
 /**
  Modbus command codes
@@ -31,20 +22,20 @@ enum CrcMode {
  - Input:       16 bit only read unsigned register
  */
 enum Command: UInt8 {
-    /** Read coil (one bit) register */
+    /** Read coil (one bit) status */
     case readCoilStatus = 0x01
-    /** Read discrete (one bit) register */
+    /** Read discrete (one bit) inputs */
     case readDiscreteInputs = 0x02
-    /** Read holding (16 bit) register */
+    /** Read holding (16 bit) registers */
     case readHoldingRegisters = 0x03
-    /** Read input (16 bit) register */
+    /** Read input (16 bit) registers */
     case readInputRegisters = 0x04
-
+    
     /** Write coil (one bit) register */
     case forceSingleCoil = 0x05
     /** Write holding (16 bit bit) register */
     case presetSingleRegister = 0x06
-
+    
     /** Write multiply coil (one bit) registers */
     case forceMultipleCoils = 0x0F
     /** Write multiply holding (16 bit bit) registers */
@@ -65,33 +56,4 @@ enum Error: UInt16 {
     
     case errorForceMultipleCoils = 0x15
     case errorPresetMultipleRegisters = 0x16
-}
-
-
-/**
- Modbus crc16 caluculator
- */
-class Crc16 {
-    
-    func modbusCrc16(_ data: [UInt8]) -> UInt16? {
-        if data.isEmpty {
-            return nil
-        }
-        let polynomial: UInt16 = 0xA001 // A001 is the bit reverse of 8005
-        var accumulator: UInt16 = 0xFFFF
-        for byte in data {
-            var tempByte = UInt16(byte)
-            for _ in 0 ..< 8 {
-                let temp1 = accumulator & 0x0001
-                accumulator = accumulator >> 1
-                let temp2 = tempByte & 0x0001
-                tempByte = tempByte >> 1
-                if (temp1 ^ temp2) == 1 {
-                    accumulator = accumulator ^ polynomial
-                }
-            }
-        }
-        return accumulator
-    }
-    
 }
