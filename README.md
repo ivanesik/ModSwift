@@ -24,6 +24,14 @@ dependencies: [
 ]
 ```
 
+### CocoaPods
+
+To integrate CrcSwift into your Xcode project using CocoaPods, specify it in your Podfile:
+
+```ruby
+pod 'ModSwift', '~> 0.0.1'
+```
+
 ## Usage
 
 ### Master Mode
@@ -87,7 +95,6 @@ Functions:
 - LRC check (for ASCII mode)
 - Tests in CI
 - Pod lint in CI
-- CocoaPods
 
 ## License
 
