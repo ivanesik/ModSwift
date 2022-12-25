@@ -2,6 +2,7 @@
 
 [![Swift](https://img.shields.io/badge/Swift->5.0-orange.svg)](https://swift.org)
 [![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ModSwift.svg?style=flat-square)](https://img.shields.io/cocoapods/v/ModSwift.svg)
 [![Xcode](https://img.shields.io/badge/Xcode-14.0-blue.svg)](https://developer.apple.com/xcode)
 [![MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
 
@@ -9,7 +10,7 @@
 
 ## Summary
 
-Library to easily generate Modbus commands in Swift.
+Library to easy generate Modbus commands in Swift.
 
 ## Installation
 
@@ -82,6 +83,7 @@ Functions:
   - Pemex Modbus
   - Enron Modbus
 - Slave mode
+- Error Codes
 - LRC check (for ASCII mode)
 - Tests in CI
 - Pod lint in CI
