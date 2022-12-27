@@ -146,4 +146,15 @@ class ModSwiftTcpTest: XCTestCase {
         XCTAssertEqual(data, rightData)
     }
     
+    func testReadAndWriteMultipleRegisters() {
+        let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x11, 0x0B, 0x17, 0x00, 0x03, 0x00, 0x06, 0x00, 0x0E, 0x00, 0x03, 0x06, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF])
+        let data = modbus.readAndWriteMultipleRegisters(
+            readStartingAddress: 0x03,
+            quantityToRead: 0x06,
+            writeStartingAddress: 0x0E,
+            writeRegistersValues: [0xFF, 0xFF, 0xFF]
+        )
+        XCTAssertEqual(data, rightData)
+    }
+    
 }

@@ -282,15 +282,19 @@ public class ModSwift {
 
         for i in 0...(bytesCount - 1) {
             var byte: UInt8 = 0
+            
             for y in 0...7 {
                 let index = i * 8 + y
+                
                 if index < values.count {
                     byte += values[index] ? 128 : 0
                 }
+                
                 if y != 7 {
                     byte = byte >> 1
                 }
             }
+
             data.append(byte)
         }
 
@@ -353,6 +357,28 @@ public class ModSwift {
             address: referenceAddress,
             data: DataHelper.splitIntIntoTwoBytes(andMask) + DataHelper.splitIntIntoTwoBytes(orMask)
         )
+    }
+    
+    /// Returns package for "Read and Write Multiple registers" function (0x17)
+    func readAndWriteMultipleRegisters(
+        readStartingAddress: UInt16,
+        quantityToRead: UInt16,
+        writeStartingAddress: UInt16,
+        writeRegistersValues: [UInt16]
+    ) -> Data {
+        let quantityToWrite = DataHelper.splitIntIntoTwoBytes(writeRegistersValues.count)
+        let bytesToWrite = [UInt8(writeRegistersValues.count * 2)]
+        let prefixData = DataHelper.splitIntIntoTwoBytes(readStartingAddress) +
+            DataHelper.splitIntIntoTwoBytes(quantityToRead) +
+            DataHelper.splitIntIntoTwoBytes(writeStartingAddress) +
+            quantityToWrite +
+            bytesToWrite
+        
+        let data = writeRegistersValues.reduce(prefixData) { partialResult, register in
+            return partialResult + DataHelper.splitIntIntoTwoBytes(register)
+        }
+        
+        return createCommand(command: .readAndWriteMultipleRegisters, data: data)
     }
     
 }
