@@ -192,7 +192,7 @@ public class ModSwift {
         
         return buildADU(pdu: pdu)
     }
-
+    
     //--------------------------------------------------------------------------------------------------
     // Generate Command Package
     //--------------------------------------------------------------------------------------------------
@@ -323,6 +323,22 @@ public class ModSwift {
     /// Returns package for "Report Server ID" function (0x11)
     func reportServerId() -> Data {
         return createCommand(command: .reportServerId)
+    }
+    
+    /// Returns package for "Read File Record" function (0x14)
+    func readFileRecord(bytesCount: UInt8, subRequests: [ModSwiftReadFileSubRequest]) -> Data {
+        var data = [bytesCount]
+        
+        for subRequest in subRequests {
+            let subRequestData = [subRequest.referenceType]
+            + DataHelper.splitIntIntoTwoBytes(subRequest.fileNumber)
+            + DataHelper.splitIntIntoTwoBytes(subRequest.recordNumber)
+            + DataHelper.splitIntIntoTwoBytes(subRequest.recordLength)
+            
+            data = data + subRequestData
+        }
+        
+        return createCommand(command: .readFileRecord, data: data)
     }
     
 }

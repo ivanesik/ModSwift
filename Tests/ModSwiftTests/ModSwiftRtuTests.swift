@@ -99,7 +99,7 @@ final class ModSwiftTests: XCTestCase {
     }
     
     func testPresetMultipleRegisters() {
-        let rightData = Data([11, 16, 1, 13, 0, 3 /*reg nums*/, 6, 0xA3, 0x0D, 0x15, 0x01, 0x11, 0x27, 0x58, 0x47])
+        let rightData = Data([0x0B, 0x10, 0x01, 0x0D, 0x00, 0x03, 0x06, 0xA3, 0x0D, 0x15, 0x01, 0x11, 0x27, 0x58, 0x47])
         let data = modbus.presetMultipleRegisters(startAddress: 0x010D, values: [0xA30D, 0x1501, 0x1127])
         XCTAssertEqual(data, rightData)
     }
@@ -110,4 +110,16 @@ final class ModSwiftTests: XCTestCase {
         XCTAssertEqual(data, rightData)
     }
     
+    func testReadFileRecord() {
+        let rightData = Data([0x0B, 0x14, 0x0E, 0x06, 0x00, 0x04, 0x00, 0x01, 0x00, 0x02, 0x06, 0x00, 0x03, 0x00, 0x09, 0x00, 0x02, 0x5f, 0xd2])
+        let readFileSubRequests = [
+            ModSwiftReadFileSubRequest(fileNumber: 0x0004, recordNumber: 0x0001, recordLength: 0x0002),
+            ModSwiftReadFileSubRequest(fileNumber: 0x0003, recordNumber: 0x0009, recordLength: 0x0002)
+        ]
+        let data = modbus.readFileRecord(bytesCount: 0x0E, subRequests: readFileSubRequests)
+        
+        print(data as NSData)
+
+        XCTAssertEqual(data, rightData)
+    }
 }

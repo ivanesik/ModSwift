@@ -68,3 +68,17 @@ enum Command: UInt8 {
     /** Encapsulated Interface Transport */
     case encapsulatedInterfaceTransport = 0x2B
 }
+
+public struct ModSwiftReadFileSubRequest {
+    let referenceType: UInt8
+    let fileNumber: UInt16
+    let recordNumber: UInt16
+    let recordLength: UInt16
+    
+    init(fileNumber: UInt16, recordNumber: UInt16, recordLength: UInt16, referenceType: UInt8 = 0x06) {
+        self.fileNumber = fileNumber
+        self.recordNumber = recordNumber
+        self.recordLength = recordLength
+        self.referenceType = referenceType
+    }
+}

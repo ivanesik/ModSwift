@@ -101,6 +101,8 @@ Functions:
 
 - Report Server ID: **reportServerId** = 0x11
 
+- Read File Record: **readFileRecord** = 0x14
+
 ## TODO
 
 - Split TCP and RTU into 2 classes with extension of base class BaseModbus
@@ -108,7 +110,6 @@ Functions:
   - Mask Write Register - 0x16
   - Read/Write Multiple registers - 0x17
   - Read FIFO Queue - 0x18
-  - Read File Record - 0x14
   - Write File Record - 0x15
   - Encapsulated Interface Transport - 0x2B
 - Presets for diagnostic (0x08) function
