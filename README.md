@@ -92,6 +92,8 @@ Functions:
 - Write holding (16 bit bit) register: **presetSingleRegister** = 0x06
 
 - Read Exception Status: **readExceptionStatus** = 0x07
+- Diagnostic: **diagnostic** = 0x08
+- Get Comm Event Counter: **getCommEventCounter** = 0x0B
 
 - Write multiply coil (one bit) registers: **forceMultipleCoils** = 0x0F
 - Write multiply holding (16 bit bit) registers: **presetMultipleRegisters**= 0x10
@@ -105,7 +107,6 @@ Functions:
   - Read FIFO Queue - 0x18
   - Read File Record - 0x14
   - Write File Record - 0x15
-  - Get Com Event Counter - 0x0B
   - Get Com Event Log - 0x0C
   - Report Server ID - 0x11
   - Encapsulated Interface Transport - 0x2B

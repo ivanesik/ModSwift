@@ -79,6 +79,12 @@ final class ModSwiftTests: XCTestCase {
         XCTAssertEqual(data, rightData)
     }
     
+    func testGetCommEventCounter() {
+        let rightData = Data([0x0B, 0x0B, 0x47, 0x47])
+        let data = modbus.getCommEventCounter()
+        XCTAssertEqual(data, rightData)
+    }
+    
     func testForceMultipleCoils() {
         // trans 2, prot 2, len 2, slave 1, func 1, addr 2, count 2, data
         let rightData = Data([11, 15, 1, 13, 0, 20, 3, 0x85, 0xA8, 0x05, 0x73, 0xC3])

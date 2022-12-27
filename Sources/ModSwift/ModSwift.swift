@@ -256,11 +256,17 @@ public class ModSwift {
         return createCommand(command: .readExceptionStatus)
     }
     
+    /// Returns package for "Diagnostic" function (0x08)
     func diagnostic(subFunction: UInt16, data: UInt16) -> Data {
         let data = DataHelper.splitIntIntoTwoBytes(subFunction)
         + DataHelper.splitIntIntoTwoBytes(data)
         
         return createCommand(command: .diagnostic, data: data)
+    }
+    
+    /// Returns package for "Get Comm Event Counter" function (0x0B)
+    func getCommEventCounter() -> Data {
+        return createCommand(command: .getCommEventCounter)
     }
     
     /// Returns package for force (write) multiple coils function (0x0F)
