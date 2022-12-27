@@ -25,7 +25,7 @@ class ModSwiftTcpTest: XCTestCase {
     }
     
     func testReadCoilStatus() {
-        let rightData = Data([0, 1, 0, 0, 0, 6, 11, 1, 1, 13, 0, 25] ) // trans 2, prot 2, len 2, slave 1, func 1, addr 2, data 2
+        let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x0B, 0x01, 0x01, 0x0D, 0x00, 0x19])
         let data = modbus.readCoilStatus(startAddress: 0x010D, numOfCoils: 0x0019)
         XCTAssertEqual(data, rightData)
     }
@@ -49,10 +49,11 @@ class ModSwiftTcpTest: XCTestCase {
     }
     
     func testForceSingleCoil() {
-        var rightData = Data([0, 1, 0, 0, 0, 6, 11, 5, 1, 13, 0xFF, 0x00] )
+        var rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x0B, 0x05, 0x01, 0x0D, 0xFF, 0x00] )
         var data = modbus.forceSingleCoil(startAddress: 0x010D, value: true)
         XCTAssertEqual(data, rightData)
-        rightData = Data([0, 2, 0, 0, 0, 6, 11, 5, 1, 13, 0x00, 0x00] )
+        
+        rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x0B, 0x05, 0x01, 0x0D, 0x00, 0x00] )
         data = modbus.forceSingleCoil(startAddress: 0x010D, value: false)
         XCTAssertEqual(data, rightData)
     }
@@ -73,13 +74,15 @@ class ModSwiftTcpTest: XCTestCase {
     func testPresetMultipleRegisters() {
         let rightData = Data([0, 1, 0, 0, 0, 13, 11, 16, 1, 13, 0, 3 /*reg nums*/, 6, 0xA3, 0x0D, 0x15, 0x01, 0x11, 0x27])
         let data = modbus.presetMultipleRegisters(startAddress: 0x010D, values: [0xA30D, 0x1501, 0x1127])
-        print(rightData as NSData)
-        print(data as NSData)
         XCTAssertEqual(data, rightData)
     }
     
     
     func testCommandCreate() {
+        XCTAssertEqual(true, false)
+    }
+    
+    func testTransactionIncrement() {
         XCTAssertEqual(true, false)
     }
     
