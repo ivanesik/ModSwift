@@ -41,7 +41,7 @@ enum Command: UInt8 {
     /** Get Com Event Counter */
     case getCommEventCounter = 0x0B
     /** Get Com Event Log */
-    case getComEventLog = 0x0C
+    case getCommEventLog = 0x0C
     /** Report Server ID */
     case reportServerId = 0x11
     
