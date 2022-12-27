@@ -57,6 +57,18 @@ let dataPMR = modbus.presetMultipleRegisters(startAddress: 0x010D, values: [0xA3
 print(dataPMR as NSData) //<00010000 000d0b10 010d0003 06a30d15 011127>
 ```
 
+Auto Increment Mode
+
+```swift
+var modbus = ModSwift(mode: .tcp)
+modbus.setTransctionAutoIncrement(true)
+        
+print(modbus.forceSingleCoil(startAddress: 0x0000, value: true))
+// 0x00000000000600050000ff00
+print(modbus.forceSingleCoil(startAddress: 0x0000, value: true))
+// 0x00010000000600050000ff00
+```
+
 ## Features
 
 Type:
@@ -84,7 +96,19 @@ Functions:
 
 ## TODO
 
-- TODO in readme
+- Split TCP and RTU into 2 classes with extension of base class BaseModbus
+- Commands:
+  - Mask Write Register - 0x16
+  - Read/Write Multiple registers - 0x17
+  - Read FIFO Queue - 0x18
+  - Read File Record - 0x14
+  - Write File Record - 0x15
+  - Read Exception Status - 0x07
+  - Diagnostic - 0x08
+  - Get Com Event Counter - 0x0B
+  - Get Com Event Log - 0x0C
+  - Report Server ID - 0x11
+  - Encapsulated Interface Transport - 0x2B
 - Modes:
   - ASCII mode
   - Modbus Plus
