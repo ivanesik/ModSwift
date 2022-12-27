@@ -24,41 +24,48 @@ final class ModSwiftTests: XCTestCase {
     }
     
     func testReadCoilStatus() {
-        let rightData = Data([11, 1, 1, 13, 0, 25, 0x55, 0x6D] ) //  slave 1, func 1, addr 2, data 2, crc 2
+        let rightData = Data([0x0B, 0x01, 0x01, 0x0D, 0x00, 25, 0x55, 0x6D] ) //  slave 1, func 1, addr 2, data 2, crc 2
         let data = modbus.readCoilStatus(startAddress: 0x010D, numOfCoils: 0x0019)
         XCTAssertEqual(data, rightData)
     }
     
     func testReadDiscreteInputs() {
-        let rightData = Data([11, 2, 1, 13, 0, 25, 0x55, 0x29] )
+        let rightData = Data([0x0B, 2, 1, 13, 0, 25, 0x55, 0x29] )
         let data = modbus.readDiscreteInputs(startAddress: 0x010D, numOfInputs: 0x0019)
         XCTAssertEqual(data, rightData)
     }
     
     func testReadHoldingRegisters() {
-        let rightData = Data([11, 3, 1, 13, 0, 3, 0x5E, 0x95] )
+        let rightData = Data([0x0B, 3, 1, 13, 0, 3, 0x5E, 0x95] )
         let data = modbus.readHoldingRegisters(startAddress: 0x010D, numOfRegs: 0x0003)
         XCTAssertEqual(data, rightData)
     }
     
     func testReadInputRegisters() {
-        let rightData = Data([11, 4, 1, 13, 0, 3, 0x9E, 0x20] )
+        let rightData = Data([0x0B, 4, 1, 13, 0, 3, 0x9E, 0x20] )
         let data = modbus.readInputRegisters(startAddress: 0x010D, numOfRegs: 0x0003)
         XCTAssertEqual(data, rightData)
     }
     
     func testForceSingleCoil() {
-        var rightData = Data([11, 5, 1, 13, 0xFF, 0x00, 0xAF, 0x1C] )
+        var rightData = Data([0x0B, 0x05, 0x01, 0x0D, 0xFF, 0x00, 0xAF, 0x1C] )
         var data = modbus.forceSingleCoil(startAddress: 0x010D, value: true)
         XCTAssertEqual(data, rightData)
-        rightData = Data([11, 5, 1, 13, 0x00, 0x00, 0x5F, 0x5D] )
+        
+        rightData = Data([0x0B, 0x05, 0x01, 0x0D, 0x00, 0x00, 0x5F, 0x5D] )
         data = modbus.forceSingleCoil(startAddress: 0x010D, value: false)
         XCTAssertEqual(data, rightData)
     }
     
     func testPresetSingleRegister() {
-        let rightData = Data([11, 6, 1, 13, 0, 3, 0x5E, 0x59] )
+        let rightData = Data([0x0B, 0x06, 0x01, 0x0D, 0x00, 0x03, 0x5E, 0x59] )
         let data = modbus.presetSingleRegister(startAddress: 0x010D, value: 0x0003)
+        XCTAssertEqual(data, rightData)
+    }
+    
+    func testReadExceptionStatus() {
+        let rightData = Data([0x0B, 0x07, 0x42, 0x47])
+        let data = modbus.readExceptionStatus()
         XCTAssertEqual(data, rightData)
     }
     

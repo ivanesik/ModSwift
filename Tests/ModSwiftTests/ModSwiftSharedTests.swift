@@ -84,6 +84,7 @@ class ModSwiftSharedTests: XCTestCase {
     }
 
     func testTransactionIncrement() {
+        // AutoIncrement: OFF
         modbus.setTransctionAutoIncrement(false)
         
         var rightData = Data([0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x01, 0x0D, 0xFF, 0x00] )
@@ -94,7 +95,7 @@ class ModSwiftSharedTests: XCTestCase {
         data = modbus.forceSingleCoil(startAddress: 0x010D, value: false)
         XCTAssertEqual(data, rightData)
         
-
+        // AutoIncrement: ON
         modbus.setTransctionAutoIncrement(true)
 
         rightData = Data([0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x01, 0x0D, 0xFF, 0x00] )
@@ -102,6 +103,17 @@ class ModSwiftSharedTests: XCTestCase {
         XCTAssertEqual(data, rightData)
 
         rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x01, 0x0D, 0x00, 0x00] )
+        data = modbus.forceSingleCoil(startAddress: 0x010D, value: false)
+        XCTAssertEqual(data, rightData)
+        
+        // AutoIncrement: OFF
+        modbus.setTransctionAutoIncrement(false)
+        
+        rightData = Data([0x00, 0x02, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x01, 0x0D, 0x00, 0x00] )
+        data = modbus.forceSingleCoil(startAddress: 0x010D, value: false)
+        XCTAssertEqual(data, rightData)
+        
+        rightData = Data([0x00, 0x02, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x01, 0x0D, 0x00, 0x00] )
         data = modbus.forceSingleCoil(startAddress: 0x010D, value: false)
         XCTAssertEqual(data, rightData)
     }
