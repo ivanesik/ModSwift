@@ -105,4 +105,10 @@ class ModSwiftTcpTest: XCTestCase {
         XCTAssertEqual(data, rightData)
     }
     
+    func testReportServerId() {
+        let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x02, 0x0B, 0x11])
+        let data = modbus.reportServerId()
+        XCTAssertEqual(data, rightData)
+    }
+    
 }

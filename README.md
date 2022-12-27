@@ -99,6 +99,8 @@ Functions:
 - Write multiply coil (one bit) registers: **forceMultipleCoils** = 0x0F
 - Write multiply holding (16 bit bit) registers: **presetMultipleRegisters**= 0x10
 
+- Report Server ID: **reportServerId** = 0x11
+
 ## TODO
 
 - Split TCP and RTU into 2 classes with extension of base class BaseModbus
@@ -108,7 +110,6 @@ Functions:
   - Read FIFO Queue - 0x18
   - Read File Record - 0x14
   - Write File Record - 0x15
-  - Report Server ID - 0x11
   - Encapsulated Interface Transport - 0x2B
 - Presets for diagnostic (0x08) function
 - Modes:
