@@ -83,29 +83,29 @@ Mode:
 
 Functions:
 
-| Function Name                                 | Function Code                      | Function Number |
-| --------------------------------------------- | ---------------------------------- | --------------- |
-| Read coil (one bit) register                  | `ModSwift.readCoilStatus`          | 0x01            |
-| Read discrete (one bit) register              | `ModSwift.readDiscreteInputs`      | 0x02            |
-| Read holding (16 bit) register                | `ModSwift.readHoldingRegisters`    | 0x03            |
-| Read input (16 bit) register                  | `ModSwift.readInputRegisters`      | 0x04            |
-| Write coil (one bit) register                 | `ModSwift.forceSingleCoil`         | 0x05            |
-| Write holding (16 bit bit) register           | `ModSwift.presetSingleRegister`    | 0x06            |
-| Read Exception Status                         | `ModSwift.readExceptionStatus`     | 0x07            |
-| Diagnostic                                    | `ModSwift.diagnostic`              | 0x08            |
-| Get Comm Event Counter                        | `ModSwift.getCommEventCounter`     | 0x0B            |
-| Get Comm Event Log                            | `ModSwift.getCommEventLog`         | 0x0C            |
-| Write multiply coil (one bit) registers       | `ModSwift.forceMultipleCoils`      | 0x0F            |
-| Write multiply holding (16 bit bit) registers | `ModSwift.presetMultipleRegisters` | 0x10            |
-| Report Server ID                              | `ModSwift.reportServerId`          | 0x11            |
-| Read File Record                              | `ModSwift.readFileRecord`          | 0x14            |
-| Write File Record                             | `ModSwift.writeFileRecord`         | 0x15            |
-| Mask Write Register                           | `ModSwift.maskWriteRegister`         | 0x16            |
+| Function Name                                 | Function Code                            | Function Number |
+| --------------------------------------------- | ---------------------------------------- | --------------- |
+| Read coil (one bit) register                  | `ModSwift.readCoilStatus`                | 0x01            |
+| Read discrete (one bit) register              | `ModSwift.readDiscreteInputs`            | 0x02            |
+| Read holding (16 bit) register                | `ModSwift.readHoldingRegisters`          | 0x03            |
+| Read input (16 bit) register                  | `ModSwift.readInputRegisters`            | 0x04            |
+| Write coil (one bit) register                 | `ModSwift.forceSingleCoil`               | 0x05            |
+| Write holding (16 bit bit) register           | `ModSwift.presetSingleRegister`          | 0x06            |
+| Read Exception Status                         | `ModSwift.readExceptionStatus`           | 0x07            |
+| Diagnostic                                    | `ModSwift.diagnostic`                    | 0x08            |
+| Get Comm Event Counter                        | `ModSwift.getCommEventCounter`           | 0x0B            |
+| Get Comm Event Log                            | `ModSwift.getCommEventLog`               | 0x0C            |
+| Write multiply coil (one bit) registers       | `ModSwift.forceMultipleCoils`            | 0x0F            |
+| Write multiply holding (16 bit bit) registers | `ModSwift.presetMultipleRegisters`       | 0x10            |
+| Report Server ID                              | `ModSwift.reportServerId`                | 0x11            |
+| Read File Record                              | `ModSwift.readFileRecord`                | 0x14            |
+| Write File Record                             | `ModSwift.writeFileRecord`               | 0x15            |
+| Mask Write Register                           | `ModSwift.maskWriteRegister`             | 0x16            |
+| Read and Write Multiple registers             | `ModSwift.readAndWriteMultipleRegisters` | 0x17            |
 
 ## TODO
 
 - Commands:
-  - Read/Write Multiple registers - 0x17
   - Read FIFO Queue - 0x18
   - Encapsulated Interface Transport - 0x2B
 - Doc: examples for every function
