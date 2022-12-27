@@ -140,4 +140,10 @@ class ModSwiftTcpTest: XCTestCase {
         XCTAssertEqual(data, rightData)
     }
     
+    func testMaskWriteRegister() {
+        let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x08, 0x0B, 0x16, 0x00, 0x04, 0x00, 0xF2, 0x00, 0x025])
+        let data = modbus.maskWriteRegister(referenceAddress: 0x04, andMask: 0xF2, orMask: 0x25)
+        XCTAssertEqual(data, rightData)
+    }
+    
 }

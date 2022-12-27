@@ -100,11 +100,11 @@ Functions:
 | Report Server ID                              | `ModSwift.reportServerId`          | 0x11            |
 | Read File Record                              | `ModSwift.readFileRecord`          | 0x14            |
 | Write File Record                             | `ModSwift.writeFileRecord`         | 0x15            |
+| Mask Write Register                           | `ModSwift.maskWriteRegister`         | 0x16            |
 
 ## TODO
 
 - Commands:
-  - Mask Write Register - 0x16
   - Read/Write Multiple registers - 0x17
   - Read FIFO Queue - 0x18
   - Encapsulated Interface Transport - 0x2B

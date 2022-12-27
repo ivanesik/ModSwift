@@ -346,4 +346,13 @@ public class ModSwift {
         return createCommand(command: .writeFileRecord, data: data)
     }
 
+    /// Returns package for "Mask Write Register" function (0x16)
+    func maskWriteRegister(referenceAddress: UInt16, andMask: UInt16, orMask: UInt16) -> Data {
+        return createCommand(
+            command: .maskWriteRegister,
+            address: referenceAddress,
+            data: DataHelper.splitIntIntoTwoBytes(andMask) + DataHelper.splitIntIntoTwoBytes(orMask)
+        )
+    }
+    
 }
