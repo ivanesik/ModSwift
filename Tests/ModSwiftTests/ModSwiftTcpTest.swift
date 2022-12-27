@@ -117,7 +117,26 @@ class ModSwiftTcpTest: XCTestCase {
             ModSwiftReadFileSubRequest(fileNumber: 0x0004, recordNumber: 0x0001, recordLength: 0x0002),
             ModSwiftReadFileSubRequest(fileNumber: 0x0003, recordNumber: 0x0009, recordLength: 0x0002)
         ]
-        let data = modbus.readFileRecord(bytesCount: 0x0E, subRequests: readFileSubRequests)
+        let data = modbus.readFileRecord(subRequests: readFileSubRequests)
+        XCTAssertEqual(data, rightData)
+    }
+    
+    func testWriteFileRecord() {
+        let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x1b, 0x0B, 0x15, 0x18, 0x06, 0x00, 0x04, 0x00, 0x07, 0x00, 0x03, 0x06, 0xAF, 0x04, 0xBE, 0x10, 0x0D, 0x06, 0x00, 0x09, 0x00, 0x02, 0x00, 0x02, 0xF1, 0x02, 0x00, 0x5D])
+        let readFileSubRequests = [
+            ModSwiftWriteFileSubRequest(
+                fileNumber: 0x0004,
+                recordNumber: 0x0007,
+                recordData: [0x06AF, 0x04BE, 0x100D]
+            ),
+            ModSwiftWriteFileSubRequest(
+                fileNumber: 0x0009,
+                recordNumber: 0x0002,
+                recordData: [0xF102, 0x005D]
+            )
+        ]
+        let data = modbus.writeFileRecord(subRequests: readFileSubRequests)
+        
         XCTAssertEqual(data, rightData)
     }
     

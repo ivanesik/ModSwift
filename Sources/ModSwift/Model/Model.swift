@@ -64,12 +64,18 @@ enum Command: UInt8 {
     
     /** Read FIFO Queue */
     case readFIFOQueue = 0x18
-
+    
     /** Encapsulated Interface Transport */
     case encapsulatedInterfaceTransport = 0x2B
 }
 
-public struct ModSwiftReadFileSubRequest {
+protocol ModSwiftFileSubRequest {
+    var referenceType: UInt8 { get }
+    var fileNumber: UInt16 { get }
+    var recordNumber: UInt16 { get }
+}
+
+public struct ModSwiftReadFileSubRequest : ModSwiftFileSubRequest {
     let referenceType: UInt8
     let fileNumber: UInt16
     let recordNumber: UInt16
@@ -80,5 +86,44 @@ public struct ModSwiftReadFileSubRequest {
         self.recordNumber = recordNumber
         self.recordLength = recordLength
         self.referenceType = referenceType
+    }
+    
+    
+    func prepare() -> [UInt8] {
+        return [self.referenceType]
+        + DataHelper.splitIntIntoTwoBytes(self.fileNumber)
+        + DataHelper.splitIntIntoTwoBytes(self.recordNumber)
+        + DataHelper.splitIntIntoTwoBytes(self.recordLength)
+    }
+}
+
+public struct ModSwiftWriteFileSubRequest : ModSwiftFileSubRequest {
+    let referenceType: UInt8
+    let fileNumber: UInt16
+    let recordNumber: UInt16
+    let recordData: [UInt16]
+    
+    init(
+        fileNumber: UInt16,
+        recordNumber: UInt16,
+        recordData: [UInt16],
+        referenceType: UInt8 = 0x06
+    ) {
+        self.fileNumber = fileNumber
+        self.recordNumber = recordNumber
+        self.recordData = recordData
+        self.referenceType = referenceType
+    }
+    
+    func prepare() -> [UInt8] {
+        let preparedData = self.recordData.reduce([]) { partialResult, recordRegistr in
+            return partialResult + DataHelper.splitIntIntoTwoBytes(recordRegistr)
+        }
+        
+        return [self.referenceType]
+        + DataHelper.splitIntIntoTwoBytes(self.fileNumber)
+        + DataHelper.splitIntIntoTwoBytes(self.recordNumber)
+        + DataHelper.splitIntIntoTwoBytes(UInt16(recordData.count))
+        + preparedData
     }
 }

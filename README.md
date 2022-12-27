@@ -62,7 +62,7 @@ Auto Increment Mode
 ```swift
 var modbus = ModSwift(mode: .tcp)
 modbus.setTransctionAutoIncrement(true)
-        
+
 print(modbus.forceSingleCoil(startAddress: 0x0000, value: true))
 // 0x00000000000600050000ff00
 print(modbus.forceSingleCoil(startAddress: 0x0000, value: true))
@@ -83,36 +83,34 @@ Mode:
 
 Functions:
 
-- Read coil (one bit) register: **readCoilStatus** = 0x01
-- Read discrete (one bit) register: **readDiscreteInputs** = 0x02
-- Read holding (16 bit) register: **readHoldingRegisters** = 0x03
-- Read input (16 bit) register: **readInputRegisters** = 0x04
-
-- Write coil (one bit) register: **forceSingleCoil** = 0x05
-- Write holding (16 bit bit) register: **presetSingleRegister** = 0x06
-
-- Read Exception Status: **readExceptionStatus** = 0x07
-- Diagnostic: **diagnostic** = 0x08
-- Get Comm Event Counter: **getCommEventCounter** = 0x0B
-- Get Comm Event Log: **getCommEventLog** = 0x0C
-
-- Write multiply coil (one bit) registers: **forceMultipleCoils** = 0x0F
-- Write multiply holding (16 bit bit) registers: **presetMultipleRegisters**= 0x10
-
-- Report Server ID: **reportServerId** = 0x11
-
-- Read File Record: **readFileRecord** = 0x14
+| Function Name                                 | Function Code                      | Function Number |
+| --------------------------------------------- | ---------------------------------- | --------------- |
+| Read coil (one bit) register                  | `ModSwift.readCoilStatus`          | 0x01            |
+| Read discrete (one bit) register              | `ModSwift.readDiscreteInputs`      | 0x02            |
+| Read holding (16 bit) register                | `ModSwift.readHoldingRegisters`    | 0x03            |
+| Read input (16 bit) register                  | `ModSwift.readInputRegisters`      | 0x04            |
+| Write coil (one bit) register                 | `ModSwift.forceSingleCoil`         | 0x05            |
+| Write holding (16 bit bit) register           | `ModSwift.presetSingleRegister`    | 0x06            |
+| Read Exception Status                         | `ModSwift.readExceptionStatus`     | 0x07            |
+| Diagnostic                                    | `ModSwift.diagnostic`              | 0x08            |
+| Get Comm Event Counter                        | `ModSwift.getCommEventCounter`     | 0x0B            |
+| Get Comm Event Log                            | `ModSwift.getCommEventLog`         | 0x0C            |
+| Write multiply coil (one bit) registers       | `ModSwift.forceMultipleCoils`      | 0x0F            |
+| Write multiply holding (16 bit bit) registers | `ModSwift.presetMultipleRegisters` | 0x10            |
+| Report Server ID                              | `ModSwift.reportServerId`          | 0x11            |
+| Read File Record                              | `ModSwift.readFileRecord`          | 0x14            |
+| Write File Record                             | `ModSwift.writeFileRecord`         | 0x15            |
 
 ## TODO
 
-- Split TCP and RTU into 2 classes with extension of base class BaseModbus
 - Commands:
   - Mask Write Register - 0x16
   - Read/Write Multiple registers - 0x17
   - Read FIFO Queue - 0x18
-  - Write File Record - 0x15
   - Encapsulated Interface Transport - 0x2B
+- Doc: examples for every function
 - Presets for diagnostic (0x08) function
+- Think: Split TCP and RTU into 2 classes with extension of base class BaseModbus
 - Modes:
   - ASCII mode
   - Modbus Plus
