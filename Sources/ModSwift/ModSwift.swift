@@ -46,7 +46,7 @@ public class ModSwift {
         self.slaveAddress = slaveAddress
         self.enableTransctionAutoIncrement = enableTransctionAutoIncrement
     }
-
+    
     /// Set modbus device address.
     ///
     /// - parameters:
@@ -93,9 +93,9 @@ public class ModSwift {
     public func getProtocolId() -> UInt16 {
         return protocolId
     }
-
+    
     //--------------------------------------------------------------------------------------------------
-    // Create Package
+    // Generate Package
     //--------------------------------------------------------------------------------------------------
     
     static private func buildPDU(
@@ -104,8 +104,8 @@ public class ModSwift {
         data: [UInt8] = []
     ) -> [UInt8] {
         return [command.rawValue] +
-            DataHelper.splitIntIntoTwoBytes(address) +
-            data
+        DataHelper.splitIntIntoTwoBytes(address) +
+        data
     }
     
     static private func buildPDU(command: Command) -> [UInt8] {
@@ -115,10 +115,10 @@ public class ModSwift {
     private func buildTcpADU(pdu: [UInt8]) -> [UInt8] {
         let slaveAddressWithPdu: [UInt8] = [slaveAddress] + pdu
         let result: [UInt8] = DataHelper.splitIntIntoTwoBytes(transactionId)
-            + DataHelper.splitIntIntoTwoBytes(protocolId)
-            + DataHelper.splitIntIntoTwoBytes(slaveAddressWithPdu.count)
-            + slaveAddressWithPdu
-            
+        + DataHelper.splitIntIntoTwoBytes(protocolId)
+        + DataHelper.splitIntIntoTwoBytes(slaveAddressWithPdu.count)
+        + slaveAddressWithPdu
+        
         if enableTransctionAutoIncrement == true {
             transactionId += 1
         }
@@ -129,14 +129,13 @@ public class ModSwift {
     private func buildRtuADU(pdu: [UInt8]) -> [UInt8] {
         let slaveAddressWithPdu: [UInt8] = [slaveAddress] + pdu
         let crc = CrcSwift.computeCrc16(slaveAddressWithPdu, mode: crcMode)
-
+        
         return slaveAddressWithPdu + DataHelper.splitIntIntoTwoBytes(crc)
     }
     
-
+    
     /// Universal method generate request package
     ///
-    /// Fuctions 15, 16 need have num of elements and num of bytes
     /// - parameters:
     ///     - command: Modbus function.
     ///     - address: Data 16 bit address.
@@ -154,14 +153,36 @@ public class ModSwift {
         )
         
         switch mode {
-            case .tcp:
-                package = buildTcpADU(pdu: pdu)
-            case .rtu:
-                package = buildRtuADU(pdu: pdu)
+        case .tcp:
+            package = buildTcpADU(pdu: pdu)
+        case .rtu:
+            package = buildRtuADU(pdu: pdu)
         }
         
         return Data(package)
     }
+    
+    /// Universal method generate request package
+    ///
+    /// - parameters:
+    ///     - command: Modbus function.
+    private func createCommand(command: Command) -> Data {
+        var package = [UInt8]()
+        let pdu: [UInt8] = ModSwift.buildPDU(command: command)
+        
+        switch mode {
+        case .tcp:
+            package = buildTcpADU(pdu: pdu)
+        case .rtu:
+            package = buildRtuADU(pdu: pdu)
+        }
+        
+        return Data(package)
+    }
+    
+    //--------------------------------------------------------------------------------------------------
+    // Generate Command Package
+    //--------------------------------------------------------------------------------------------------
     
     /// Returns package of readCoilsStatuses function (0x01)
     func readCoilStatus(startAddress: UInt16, numOfCoils: UInt16) -> Data {
@@ -218,9 +239,9 @@ public class ModSwift {
     }
     
     /// Returns package for "Read Exception Status" function (0x07)
-//    func readExceptionStatus() -> Data {
-//        return createCommand(command: .presetSingleRegister)
-//    }
+    func readExceptionStatus() -> Data {
+        return createCommand(command: .readExceptionStatus)
+    }
     
     /// Returns package for force (write) multiple coils function (0x0F)
     func forceMultipleCoils(startAddress: UInt16, values: [Bool]) -> Data {
@@ -256,11 +277,11 @@ public class ModSwift {
         var data: [UInt8] = DataHelper.splitIntIntoTwoBytes(values.count) + [
             UInt8(values.count * 2)
         ]
-
+        
         for value in values {
             data.append(contentsOf: DataHelper.splitIntIntoTwoBytes(value))
         }
-
+        
         return createCommand(
             command: .presetMultipleRegisters,
             address: startAddress,

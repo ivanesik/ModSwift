@@ -5,8 +5,6 @@
 //  Created by Ivan Eleskin on 02.07.2018.
 //
 
-import Foundation
-
 /// Describe the format of sended package
 public enum ModbusMode {
     case tcp
@@ -40,20 +38,32 @@ enum Command: UInt8 {
     case forceMultipleCoils = 0x0F
     /** Write multiply holding (16 bit bit) registers */
     case presetMultipleRegisters = 0x10
-}
-
-/**
- Modbus error codes
- */
-enum Error: UInt16 {
-    case errorReadCoilStatus = 0x01 // read-write
-    case errorReadDiscreteInputs = 0x02 // read only
-    case errorReadHoldingRegisters = 0x03 // read-write
-    case errorReadInputRegisters = 0x04 // read only
     
-    case errorRorceSingleCoil = 0x05
-    case errorPresetSingleRegister = 0x06
+    /** Mask Write Register */
+    case maskWriteRegister = 0x16
     
-    case errorForceMultipleCoils = 0x15
-    case errorPresetMultipleRegisters = 0x16
+    /** Read/Write Multiple registers */
+    case readAndWriteMultipleRegisters = 0x17
+    
+    /** Read FIFO Queue */
+    case readFIFOQueue = 0x18
+    
+    /** Read File Record */
+    case readFileRecord = 0x14
+    /** Write File Record */
+    case writeFileRecord = 0x15
+    
+    /** Read Exception Status */
+    case readExceptionStatus = 0x07
+    /** Diagnostic */
+    case diagnostic = 0x08
+    /** Get Com Event Counter */
+    case getComEventCounter = 0x0B
+    /** Get Com Event Log */
+    case getComEventLog = 0x0C
+    /** Report Server ID */
+    case reportServerId = 0x11
+    
+    /** Encapsulated Interface Transport */
+    case encapsulatedInterfaceTransport = 0x2B
 }
