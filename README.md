@@ -107,6 +107,7 @@ Functions:
 
 ## TODO
 
+- Refactor: Code Auto Formatter
 - Doc: examples for every function
 - Presets for diagnostic (0x08) function
 - Refactor: remove createCommand overloads (only `command: ..., data: ...`) and make structs for commands
