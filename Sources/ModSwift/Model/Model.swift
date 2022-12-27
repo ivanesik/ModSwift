@@ -42,13 +42,19 @@ enum Command: UInt8 {
     case getCommEventCounter = 0x0B
     /** Get Com Event Log */
     case getCommEventLog = 0x0C
-    /** Report Server ID */
-    case reportServerId = 0x11
     
     /** Write multiply coil (one bit) registers */
     case forceMultipleCoils = 0x0F
     /** Write multiply holding (16 bit bit) registers */
     case presetMultipleRegisters = 0x10
+    
+    /** Report Server ID */
+    case reportServerId = 0x11
+    
+    /** Read File Record */
+    case readFileRecord = 0x14
+    /** Write File Record */
+    case writeFileRecord = 0x15
     
     /** Mask Write Register */
     case maskWriteRegister = 0x16
@@ -58,12 +64,7 @@ enum Command: UInt8 {
     
     /** Read FIFO Queue */
     case readFIFOQueue = 0x18
-    
-    /** Read File Record */
-    case readFileRecord = 0x14
-    /** Write File Record */
-    case writeFileRecord = 0x15
-    
+
     /** Encapsulated Interface Transport */
     case encapsulatedInterfaceTransport = 0x2B
 }

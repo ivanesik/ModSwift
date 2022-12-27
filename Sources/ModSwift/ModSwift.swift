@@ -274,7 +274,7 @@ public class ModSwift {
         return createCommand(command: .getCommEventLog)
     }
     
-    /// Returns package for force (write) multiple coils function (0x0F)
+    /// Returns package for "Force (write) multiple coils" function (0x0F)
     func forceMultipleCoils(startAddress: UInt16, values: [Bool]) -> Data {
         var data: [UInt8] = DataHelper.splitIntIntoTwoBytes(values.count)
         
@@ -318,6 +318,11 @@ public class ModSwift {
             address: startAddress,
             data: data
         )
+    }
+    
+    /// Returns package for "Report Server ID" function (0x11)
+    func reportServerId() -> Data {
+        return createCommand(command: .reportServerId)
     }
     
 }

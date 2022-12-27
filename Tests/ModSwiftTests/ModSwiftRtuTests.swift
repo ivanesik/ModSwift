@@ -103,4 +103,11 @@ final class ModSwiftTests: XCTestCase {
         let data = modbus.presetMultipleRegisters(startAddress: 0x010D, values: [0xA30D, 0x1501, 0x1127])
         XCTAssertEqual(data, rightData)
     }
+    
+    func testReportServerId() {
+        let rightData = Data([0x0B, 0x11, 0x8c, 0xc6])
+        let data = modbus.reportServerId()
+        XCTAssertEqual(data, rightData)
+    }
+    
 }
