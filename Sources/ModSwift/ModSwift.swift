@@ -269,6 +269,11 @@ public class ModSwift {
         return createCommand(command: .getCommEventCounter)
     }
     
+    /// Returns package for "Get Comm Event Log" function (0x0C)
+    func getCommEventLog() -> Data {
+        return createCommand(command: .getCommEventLog)
+    }
+    
     /// Returns package for force (write) multiple coils function (0x0F)
     func forceMultipleCoils(startAddress: UInt16, values: [Bool]) -> Data {
         var data: [UInt8] = DataHelper.splitIntIntoTwoBytes(values.count)
