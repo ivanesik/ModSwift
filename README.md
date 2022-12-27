@@ -105,12 +105,11 @@ Functions:
   - Read FIFO Queue - 0x18
   - Read File Record - 0x14
   - Write File Record - 0x15
-  
-  - Diagnostic - 0x08
   - Get Com Event Counter - 0x0B
   - Get Com Event Log - 0x0C
   - Report Server ID - 0x11
   - Encapsulated Interface Transport - 0x2B
+- Presets for diagnostic (0x08) function
 - Modes:
   - ASCII mode
   - Modbus Plus

@@ -112,6 +112,11 @@ public class ModSwift {
         return [command.rawValue]
     }
     
+    static private func buildPDU(command: Command, data: [UInt8]) -> [UInt8] {
+        return [command.rawValue] + data
+    }
+    
+    
     private func buildTcpADU(pdu: [UInt8]) -> [UInt8] {
         let slaveAddressWithPdu: [UInt8] = [slaveAddress] + pdu
         let result: [UInt8] = DataHelper.splitIntIntoTwoBytes(transactionId)
@@ -133,33 +138,49 @@ public class ModSwift {
         return slaveAddressWithPdu + DataHelper.splitIntIntoTwoBytes(crc)
     }
     
+    private func buildADU(pdu: [UInt8]) -> Data {
+        let result: [UInt8]
+        
+        switch mode {
+        case .tcp:
+            result = buildTcpADU(pdu: pdu)
+        case .rtu:
+            result = buildRtuADU(pdu: pdu)
+        }
+        
+        return Data(result)
+    }
+    
+    
+    /// Universal method generate request package
+    ///
+    /// - parameters:
+    ///     - command: Modbus function.
+    ///     - data: Data bytes for command
+    private func createCommand(command: Command, data: [UInt8]) -> Data {
+        let pdu: [UInt8] = ModSwift.buildPDU(command: command, data: data)
+        
+        return buildADU(pdu: pdu)
+    }
     
     /// Universal method generate request package
     ///
     /// - parameters:
     ///     - command: Modbus function.
     ///     - address: Data 16 bit address.
-    ///     - data: For 1-4 commands number of readen elements, (5,6,15,16) data to write.
+    ///     - data: Data bytes for command
     private func createCommand(
         command: Command,
         address: UInt16,
         data: [UInt8] = []
     ) -> Data {
-        var package = [UInt8]()
         let pdu: [UInt8] = ModSwift.buildPDU(
             command: command,
             address: address,
             data: data
         )
         
-        switch mode {
-        case .tcp:
-            package = buildTcpADU(pdu: pdu)
-        case .rtu:
-            package = buildRtuADU(pdu: pdu)
-        }
-        
-        return Data(package)
+        return buildADU(pdu: pdu)
     }
     
     /// Universal method generate request package
@@ -167,19 +188,11 @@ public class ModSwift {
     /// - parameters:
     ///     - command: Modbus function.
     private func createCommand(command: Command) -> Data {
-        var package = [UInt8]()
         let pdu: [UInt8] = ModSwift.buildPDU(command: command)
         
-        switch mode {
-        case .tcp:
-            package = buildTcpADU(pdu: pdu)
-        case .rtu:
-            package = buildRtuADU(pdu: pdu)
-        }
-        
-        return Data(package)
+        return buildADU(pdu: pdu)
     }
-    
+
     //--------------------------------------------------------------------------------------------------
     // Generate Command Package
     //--------------------------------------------------------------------------------------------------
@@ -241,6 +254,13 @@ public class ModSwift {
     /// Returns package for "Read Exception Status" function (0x07)
     func readExceptionStatus() -> Data {
         return createCommand(command: .readExceptionStatus)
+    }
+    
+    func diagnostic(subFunction: UInt16, data: UInt16) -> Data {
+        let data = DataHelper.splitIntIntoTwoBytes(subFunction)
+        + DataHelper.splitIntIntoTwoBytes(data)
+        
+        return createCommand(command: .diagnostic, data: data)
     }
     
     /// Returns package for force (write) multiple coils function (0x0F)

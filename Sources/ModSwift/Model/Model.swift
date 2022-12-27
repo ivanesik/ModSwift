@@ -34,6 +34,17 @@ enum Command: UInt8 {
     /** Write holding (16 bit bit) register */
     case presetSingleRegister = 0x06
     
+    /** Read Exception Status */
+    case readExceptionStatus = 0x07
+    /** Diagnostic */
+    case diagnostic = 0x08
+    /** Get Com Event Counter */
+    case getComEventCounter = 0x0B
+    /** Get Com Event Log */
+    case getComEventLog = 0x0C
+    /** Report Server ID */
+    case reportServerId = 0x11
+    
     /** Write multiply coil (one bit) registers */
     case forceMultipleCoils = 0x0F
     /** Write multiply holding (16 bit bit) registers */
@@ -52,17 +63,6 @@ enum Command: UInt8 {
     case readFileRecord = 0x14
     /** Write File Record */
     case writeFileRecord = 0x15
-    
-    /** Read Exception Status */
-    case readExceptionStatus = 0x07
-    /** Diagnostic */
-    case diagnostic = 0x08
-    /** Get Com Event Counter */
-    case getComEventCounter = 0x0B
-    /** Get Com Event Log */
-    case getComEventLog = 0x0C
-    /** Report Server ID */
-    case reportServerId = 0x11
     
     /** Encapsulated Interface Transport */
     case encapsulatedInterfaceTransport = 0x2B
