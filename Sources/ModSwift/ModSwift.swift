@@ -381,4 +381,16 @@ public class ModSwift {
         return createCommand(command: .readAndWriteMultipleRegisters, data: data)
     }
     
+    /// Returns package for "Read FIFO Queue" function (0x18)
+    func readFIFOQueue(FIFOPointerAddress: UInt16) -> Data {
+        return createCommand(command: .readFIFOQueue, address: FIFOPointerAddress)
+    }
+    
+    /// Returns package for "Encapsulated Interface Transport" function (0x2B)
+    func encapsulatedInterfaceTransport(meiType: UInt8, meiData: [UInt8]) -> Data {
+        let data = [meiType] + meiData
+        
+        return createCommand(command: .encapsulatedInterfaceTransport, data: data)
+    }
+    
 }

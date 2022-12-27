@@ -155,4 +155,17 @@ final class ModSwiftTests: XCTestCase {
         )
         XCTAssertEqual(data, rightData)
     }
+    
+    func testReadFIFOQueue() {
+        let rightData = Data([0x0B, 0x18, 0x13, 0xDA, 0xAC, 0x0E])
+        let data = modbus.readFIFOQueue(FIFOPointerAddress: 0x13DA)
+        XCTAssertEqual(data, rightData)
+    }
+    
+    func testEncapsulatedInterfaceTransport() {
+        let rightData = Data([0x0B, 0x2B, 0x0D, 0xAA, 0xFF, 0x01, 0x00, 0x14, 0x64, 0xE2])
+        let data = modbus.encapsulatedInterfaceTransport(meiType: 0x0D, meiData: [0xAA, 0xFF, 0x01, 0x00, 0x14])
+        XCTAssertEqual(data, rightData)
+    }
+    
 }
