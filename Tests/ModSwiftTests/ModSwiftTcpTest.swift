@@ -66,15 +66,15 @@ class ModSwiftTcpTest: XCTestCase {
     
     func testReadExceptionStatus() {
         let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x02, 0x0B, 0x07])
-        let data = modbus.readExceptionStatus()        
+        let data = modbus.readExceptionStatus()
         XCTAssertEqual(data, rightData)
     }
     
     func testDiagnostic() {
         var rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x0B, 0x08, 0x00, 0x01, 0xFF, 0x00])
-        var data = modbus.diagnostic(subFunction: 0x0001, data: 0xFF00)        
+        var data = modbus.diagnostic(subFunction: 0x0001, data: 0xFF00)
         XCTAssertEqual(data, rightData)
-
+        
         rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x0B, 0x08, 0x00, 0x11, 0x00, 0x00])
         data = modbus.diagnostic(subFunction: 0x0011, data: 0x0000)
         XCTAssertEqual(data, rightData)
@@ -108,6 +108,16 @@ class ModSwiftTcpTest: XCTestCase {
     func testReportServerId() {
         let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x02, 0x0B, 0x11])
         let data = modbus.reportServerId()
+        XCTAssertEqual(data, rightData)
+    }
+    
+    func testReadFileRecord() {
+        let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x11, 0x0B, 0x14, 0x0E, 0x06, 0x00, 0x04, 0x00, 0x01, 0x00, 0x02, 0x06, 0x00, 0x03, 0x00, 0x09, 0x00, 0x02])
+        let readFileSubRequests = [
+            ModSwiftReadFileSubRequest(fileNumber: 0x0004, recordNumber: 0x0001, recordLength: 0x0002),
+            ModSwiftReadFileSubRequest(fileNumber: 0x0003, recordNumber: 0x0009, recordLength: 0x0002)
+        ]
+        let data = modbus.readFileRecord(bytesCount: 0x0E, subRequests: readFileSubRequests)
         XCTAssertEqual(data, rightData)
     }
     
