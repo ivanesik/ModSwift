@@ -80,6 +80,12 @@ class ModSwiftTcpTest: XCTestCase {
         XCTAssertEqual(data, rightData)
     }
     
+    func testGetCommEventCounter() {
+        let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x02, 0x0B, 0x0B])
+        let data = modbus.getCommEventCounter()
+        XCTAssertEqual(data, rightData)
+    }
+    
     func testForceMultipleCoils() {
         // trans 2, prot 2, len 2, slave 1, func 1, addr 2, count 2, data
         let rightData = Data([0x00, 0x01, 0x00, 0x00, 0x00, 0x0A, 0x0B, 0x0F, 0x01, 0x0D, 0x00, 0x14, 0x03, 0x85, 0xA8, 0x05])

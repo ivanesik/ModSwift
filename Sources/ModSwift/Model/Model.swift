@@ -39,7 +39,7 @@ enum Command: UInt8 {
     /** Diagnostic */
     case diagnostic = 0x08
     /** Get Com Event Counter */
-    case getComEventCounter = 0x0B
+    case getCommEventCounter = 0x0B
     /** Get Com Event Log */
     case getComEventLog = 0x0C
     /** Report Server ID */
