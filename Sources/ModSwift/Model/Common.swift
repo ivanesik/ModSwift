@@ -1,6 +1,6 @@
 //
 //  Model.swift
-//  
+//
 //
 //  Created by Ivan Eleskin on 02.07.2018.
 //
@@ -9,7 +9,7 @@
 public enum ModbusMode {
     case tcp
     case rtu
-    //case ascii
+    // case ascii
 }
 
 /**
@@ -28,12 +28,12 @@ enum Command: UInt8 {
     case readHoldingRegisters = 0x03
     /** Read input (16 bit) registers */
     case readInputRegisters = 0x04
-    
+
     /** Write coil (one bit) register */
     case forceSingleCoil = 0x05
     /** Write holding (16 bit bit) register */
     case presetSingleRegister = 0x06
-    
+
     /** Read Exception Status */
     case readExceptionStatus = 0x07
     /** Diagnostic */
@@ -42,29 +42,29 @@ enum Command: UInt8 {
     case getCommEventCounter = 0x0B
     /** Get Com Event Log */
     case getCommEventLog = 0x0C
-    
+
     /** Write multiply coil (one bit) registers */
     case forceMultipleCoils = 0x0F
     /** Write multiply holding (16 bit bit) registers */
     case presetMultipleRegisters = 0x10
-    
+
     /** Report Server ID */
     case reportServerId = 0x11
-    
+
     /** Read File Record */
     case readFileRecord = 0x14
     /** Write File Record */
     case writeFileRecord = 0x15
-    
+
     /** Mask Write Register */
     case maskWriteRegister = 0x16
-    
+
     /** Read/Write Multiple registers */
     case readAndWriteMultipleRegisters = 0x17
-    
+
     /** Read FIFO Queue */
     case readFIFOQueue = 0x18
-    
+
     /** Encapsulated Interface Transport */
     case encapsulatedInterfaceTransport = 0x2B
 }
@@ -75,34 +75,33 @@ protocol ModSwiftFileSubRequest {
     var recordNumber: UInt16 { get }
 }
 
-public struct ModSwiftReadFileSubRequest : ModSwiftFileSubRequest {
+public struct ModSwiftReadFileSubRequest: ModSwiftFileSubRequest {
     let referenceType: UInt8
     let fileNumber: UInt16
     let recordNumber: UInt16
     let recordLength: UInt16
-    
+
     init(fileNumber: UInt16, recordNumber: UInt16, recordLength: UInt16, referenceType: UInt8 = 0x06) {
         self.fileNumber = fileNumber
         self.recordNumber = recordNumber
         self.recordLength = recordLength
         self.referenceType = referenceType
     }
-    
-    
+
     func prepare() -> [UInt8] {
-        return [self.referenceType]
-        + DataHelper.splitIntIntoTwoBytes(self.fileNumber)
-        + DataHelper.splitIntIntoTwoBytes(self.recordNumber)
-        + DataHelper.splitIntIntoTwoBytes(self.recordLength)
+        return [referenceType]
+            + DataHelper.splitIntIntoTwoBytes(fileNumber)
+            + DataHelper.splitIntIntoTwoBytes(recordNumber)
+            + DataHelper.splitIntIntoTwoBytes(recordLength)
     }
 }
 
-public struct ModSwiftWriteFileSubRequest : ModSwiftFileSubRequest {
+public struct ModSwiftWriteFileSubRequest: ModSwiftFileSubRequest {
     let referenceType: UInt8
     let fileNumber: UInt16
     let recordNumber: UInt16
     let recordData: [UInt16]
-    
+
     init(
         fileNumber: UInt16,
         recordNumber: UInt16,
@@ -114,16 +113,16 @@ public struct ModSwiftWriteFileSubRequest : ModSwiftFileSubRequest {
         self.recordData = recordData
         self.referenceType = referenceType
     }
-    
+
     func prepare() -> [UInt8] {
-        let preparedData = self.recordData.reduce([]) { partialResult, recordRegistr in
+        let preparedData = recordData.reduce([]) { partialResult, recordRegistr in
             return partialResult + DataHelper.splitIntIntoTwoBytes(recordRegistr)
         }
-        
-        return [self.referenceType]
-        + DataHelper.splitIntIntoTwoBytes(self.fileNumber)
-        + DataHelper.splitIntIntoTwoBytes(self.recordNumber)
-        + DataHelper.splitIntIntoTwoBytes(UInt16(recordData.count))
-        + preparedData
+
+        return [referenceType]
+            + DataHelper.splitIntIntoTwoBytes(fileNumber)
+            + DataHelper.splitIntIntoTwoBytes(recordNumber)
+            + DataHelper.splitIntIntoTwoBytes(UInt16(recordData.count))
+            + preparedData
     }
 }

@@ -1,0 +1,17 @@
+# disabled rules
+
+--disable redundantReturn
+
+# format options
+
+--minversion 0.50.3
+--swiftversion 5.7
+--extensionacl on-extension
+--ifdef no-indent
+--indent 4
+--maxwidth 120
+--nospaceoperators ...,..<
+--wraparguments before-first
+--wrapcollections before-first
+--wrapparameters before-first
+--modifierorder public,private,private(set),internal,static,override,final,weak,unowned

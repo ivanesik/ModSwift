@@ -107,21 +107,21 @@ Functions:
 
 ## TODO
 
-- Refactor: Code Auto Formatter
 - Doc: examples for every function
-- Presets for diagnostic (0x08) function
 - Refactor: remove createCommand overloads (only `command: ..., data: ...`) and make structs for commands
-- Think: Split TCP and RTU into 2 classes with extension of base class BaseModbus
+- Feature: Presets for diagnostic (0x08) function
 - Modes:
   - ASCII mode
   - Modbus Plus
   - Pemex Modbus
   - Enron Modbus
-- Slave mode
-- Error Codes
-- LRC check (for ASCII mode)
-- Tests in CI
-- Pod lint in CI
+- Feature: Slave mode
+- Feature: Error Codes
+- Feature: LRC check (for ASCII mode)
+- CI: Tests
+- CI: Pod lint
+- CI: Check Code format
+- Think: Split TCP and RTU into 2 classes with extension of base class BaseModbus
 
 ## License
 

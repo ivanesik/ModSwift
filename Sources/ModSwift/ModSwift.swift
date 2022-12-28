@@ -5,18 +5,18 @@
 //  Created by Ivan Eleskin on 02.07.2018.
 //
 
-///--------------------------------------------------------------------------------------------------
+/// --------------------------------------------------------------------------------------------------
 /// TODO: в документации не забыть описать автоинкремент
-/// TODO: в документации описать что есть MBAP картинкой (http://cleverhouse.club/software/dispatch/chto-takoe-modbus-rtu-i-modbus-tcp.html)//////////////
+/// TODO: в документации описать что есть MBAP картинкой
+/// (http://cleverhouse.club/software/dispatch/chto-takoe-modbus-rtu-i-modbus-tcp.html)//////////////
 /// TODO: написать тесты правильности пакетов
-///--------------------------------------------------------------------------------------------------
+/// --------------------------------------------------------------------------------------------------
 
 import CrcSwift
 import Foundation
 
 /// Class for generating modbus packages
 public class ModSwift {
-
     private var mode: ModbusMode
 
     private var slaveAddress: UInt8
@@ -29,9 +29,9 @@ public class ModSwift {
 
     private var enableTransctionAutoIncrement: Bool
 
-    //--------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
     // Setup
-    //--------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
 
     /// Class for generating modbus packages
     /// - parameters:
@@ -62,7 +62,7 @@ public class ModSwift {
 
     /// Set transactint id of package.
     public func setTransactionId(_ transactId: UInt16) {
-        self.transactionId = transactId
+        transactionId = transactId
     }
 
     /// Set protocol Id (default 0x00)
@@ -71,12 +71,12 @@ public class ModSwift {
     }
 
     public func setTransctionAutoIncrement(_ transctionAutoIncrement: Bool) {
-        self.enableTransctionAutoIncrement = transctionAutoIncrement
+        enableTransctionAutoIncrement = transctionAutoIncrement
     }
 
-    //--------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
     // Read Package
-    //--------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
 
     public func getSlave() -> UInt8 {
         return slaveAddress
@@ -94,11 +94,11 @@ public class ModSwift {
         return protocolId
     }
 
-    //--------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
     // Generate Package
-    //--------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
 
-    static private func buildPDU(
+    private static func buildPDU(
         command: Command,
         address: UInt16,
         data: [UInt8] = []
@@ -106,11 +106,11 @@ public class ModSwift {
         return [command.rawValue] + DataHelper.splitIntIntoTwoBytes(address) + data
     }
 
-    static private func buildPDU(command: Command) -> [UInt8] {
+    private static func buildPDU(command: Command) -> [UInt8] {
         return [command.rawValue]
     }
 
-    static private func buildPDU(command: Command, data: [UInt8]) -> [UInt8] {
+    private static func buildPDU(command: Command, data: [UInt8]) -> [UInt8] {
         return [command.rawValue] + data
     }
 
@@ -118,9 +118,9 @@ public class ModSwift {
         let slaveAddressWithPdu: [UInt8] = [slaveAddress] + pdu
         let result: [UInt8] =
             DataHelper.splitIntIntoTwoBytes(transactionId)
-            + DataHelper.splitIntIntoTwoBytes(protocolId)
-            + DataHelper.splitIntIntoTwoBytes(slaveAddressWithPdu.count)
-            + slaveAddressWithPdu
+                + DataHelper.splitIntIntoTwoBytes(protocolId)
+                + DataHelper.splitIntIntoTwoBytes(slaveAddressWithPdu.count)
+                + slaveAddressWithPdu
 
         if enableTransctionAutoIncrement == true {
             transactionId += 1
@@ -190,9 +190,9 @@ public class ModSwift {
         return buildADU(pdu: pdu)
     }
 
-    //--------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
     // Generate Command Package
-    //--------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
 
     /// Returns package of readCoilsStatuses function (0x01)
     func readCoilStatus(startAddress: UInt16, numOfCoils: UInt16) -> Data {
@@ -235,7 +235,7 @@ public class ModSwift {
         return createCommand(
             command: .forceSingleCoil,
             address: startAddress,
-            data: [(value ? 0xFF : 0x00), 0x00]
+            data: [value ? 0xFF : 0x00, 0x00]
         )
     }
 
@@ -257,7 +257,7 @@ public class ModSwift {
     func diagnostic(subFunction: UInt16, data: UInt16) -> Data {
         let data =
             DataHelper.splitIntIntoTwoBytes(subFunction)
-            + DataHelper.splitIntIntoTwoBytes(data)
+                + DataHelper.splitIntIntoTwoBytes(data)
 
         return createCommand(command: .diagnostic, data: data)
     }
@@ -282,14 +282,14 @@ public class ModSwift {
 
         for i in 0...(bytesCount - 1) {
             var byte: UInt8 = 0
-            
+
             for y in 0...7 {
                 let index = i * 8 + y
-                
+
                 if index < values.count {
                     byte += values[index] ? 128 : 0
                 }
-                
+
                 if y != 7 {
                     byte = byte >> 1
                 }
@@ -309,7 +309,7 @@ public class ModSwift {
     func presetMultipleRegisters(startAddress: UInt16, values: [UInt16]) -> Data {
         var data: [UInt8] =
             DataHelper.splitIntIntoTwoBytes(values.count) + [
-                UInt8(values.count * 2)
+                UInt8(values.count * 2),
             ]
 
         for value in values {
@@ -344,7 +344,7 @@ public class ModSwift {
         var data = subRequests.reduce([]) { partialResult, subRequest in
             return partialResult + subRequest.prepare()
         }
-        
+
         data = [UInt8(data.count)] + data
 
         return createCommand(command: .writeFileRecord, data: data)
@@ -358,7 +358,7 @@ public class ModSwift {
             data: DataHelper.splitIntIntoTwoBytes(andMask) + DataHelper.splitIntIntoTwoBytes(orMask)
         )
     }
-    
+
     /// Returns package for "Read and Write Multiple registers" function (0x17)
     func readAndWriteMultipleRegisters(
         readStartingAddress: UInt16,
@@ -373,24 +373,23 @@ public class ModSwift {
             DataHelper.splitIntIntoTwoBytes(writeStartingAddress) +
             quantityToWrite +
             bytesToWrite
-        
+
         let data = writeRegistersValues.reduce(prefixData) { partialResult, register in
             return partialResult + DataHelper.splitIntIntoTwoBytes(register)
         }
-        
+
         return createCommand(command: .readAndWriteMultipleRegisters, data: data)
     }
-    
+
     /// Returns package for "Read FIFO Queue" function (0x18)
     func readFIFOQueue(FIFOPointerAddress: UInt16) -> Data {
         return createCommand(command: .readFIFOQueue, address: FIFOPointerAddress)
     }
-    
+
     /// Returns package for "Encapsulated Interface Transport" function (0x2B)
     func encapsulatedInterfaceTransport(meiType: UInt8, meiData: [UInt8]) -> Data {
         let data = [meiType] + meiData
-        
+
         return createCommand(command: .encapsulatedInterfaceTransport, data: data)
     }
-    
 }
