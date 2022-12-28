@@ -5,6 +5,7 @@
 //  Created by Ivan Eleskin on 05.07.2018.
 //
 
+import Foundation
 @testable import ModSwift
 import XCTest
 
@@ -113,5 +114,11 @@ class ModSwiftSharedTests: XCTestCase {
         rightData = Data([0x00, 0x02, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x01, 0x0D, 0x00, 0x00])
         data = modbus.forceSingleCoil(startAddress: 0x010D, value: false)
         XCTAssertEqual(data, rightData)
+    }
+
+    func testLrcChecksum() {
+        let data: [UInt8] = [0xF7, 0x03, 0x13, 0x89, 0x00, 0x0A]
+        let result = DataHelper.computeLRC(data)
+        XCTAssertEqual(0x60, result)
     }
 }

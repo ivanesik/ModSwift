@@ -15,6 +15,9 @@
 import CrcSwift
 import Foundation
 
+let ASCII_PREFIX: [UInt8] = [0x3A]
+let CR_LF: [UInt8] = [0x0D, 0x0A]
+
 /// Class for generating modbus packages
 public class ModSwift {
     private var mode: ModbusMode
@@ -25,7 +28,7 @@ public class ModSwift {
     /// Protocol identifier. TCP mode only
     private var protocolId: UInt16 = 0x00
     /// Type of CRC calculation. RTU mode only
-    private var crcMode: CRC16_TYPE = .modbus
+    private var crcRtuMode: CRC16_TYPE = .modbus
 
     private var enableTransctionAutoIncrement: Bool
 
@@ -131,9 +134,16 @@ public class ModSwift {
 
     private func buildRtuADU(pdu: [UInt8]) -> [UInt8] {
         let slaveAddressWithPdu: [UInt8] = [slaveAddress] + pdu
-        let crc = CrcSwift.computeCrc16(slaveAddressWithPdu, mode: crcMode)
+        let crc = CrcSwift.computeCrc16(slaveAddressWithPdu, mode: crcRtuMode)
 
         return slaveAddressWithPdu + DataHelper.splitIntIntoTwoBytes(crc)
+    }
+
+    private func buildAsciiADU(pdu: [UInt8]) -> [UInt8] {
+        let slaveAddressWithPdu: [UInt8] = [slaveAddress] + pdu
+        let lrc = [DataHelper.computeLRC(slaveAddressWithPdu)]
+
+        return ASCII_PREFIX + slaveAddressWithPdu + lrc + CR_LF
     }
 
     private func buildADU(pdu: [UInt8]) -> Data {
@@ -144,6 +154,8 @@ public class ModSwift {
             result = buildTcpADU(pdu: pdu)
         case .rtu:
             result = buildRtuADU(pdu: pdu)
+        case .ascii:
+            result = buildAsciiADU(pdu: pdu)
         }
 
         return Data(result)

@@ -9,7 +9,7 @@
 public enum ModbusMode {
     case tcp
     case rtu
-    // case ascii
+    case ascii
 }
 
 /**

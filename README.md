@@ -78,8 +78,9 @@ Type:
 
 Mode:
 
-- RTU
 - TCP
+- RTU
+- ASCII
 
 Functions:
 
@@ -111,13 +112,13 @@ Functions:
 - Refactor: remove createCommand overloads (only `command: ..., data: ...`) and make structs for commands
 - Feature: Presets for diagnostic (0x08) function
 - Modes:
-  - ASCII mode
   - Modbus Plus
   - Pemex Modbus
   - Enron Modbus
 - Feature: Slave mode
 - Feature: Error Codes
-- Feature: LRC check (for ASCII mode)
+- Feature: Different CRC modes
+- Feature: corner cases from doc (max pdu size and others)
 - CI: Tests
 - CI: Pod lint
 - CI: Check Code format
