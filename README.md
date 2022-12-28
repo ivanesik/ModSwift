@@ -20,7 +20,7 @@ Once you have your Swift package set up, adding ModSwift as a dependency is as e
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ivanesik/ModSwift.git", from: "0.0.2")
+    .package(url: "https://github.com/ivanesik/ModSwift.git", from: "0.0.3")
 ]
 ```
 
@@ -29,7 +29,7 @@ dependencies: [
 To integrate CrcSwift into your Xcode project using CocoaPods, specify it in your Podfile:
 
 ```ruby
-pod 'ModSwift', '~> 0.0.2'
+pod 'ModSwift', '~> 0.0.3'
 ```
 
 ## Usage
